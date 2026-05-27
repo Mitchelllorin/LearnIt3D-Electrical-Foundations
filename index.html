@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LearnIt3D — Electrical Foundations</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#050c22">
+  <meta name="description" content="LearnIt3D Electrical Foundations apprenticeship prep course with installable offline access.">
+  <meta property="og:image" content="assets/cover.png">
   <link rel="stylesheet" href="course/app/styles.css">
   <style>
     /* ── SPLASH SCREEN ────────────────────────────────── */
@@ -155,12 +159,63 @@
 
 <main id="main-content" class="main-content"></main>
 
+<div id="install-strip" class="install-strip visible" aria-live="polite">
+  <img src="assets/cover.png" alt="LearnIt3D cover artwork" class="install-cover">
+  <div class="install-copy">
+    <strong>Install LearnIt3D</strong>
+    <span>One click install creates a desktop icon to open the course directly.</span>
+  </div>
+  <button id="install-btn" class="btn btn-primary btn-sm" type="button">Install App</button>
+  <a class="btn btn-secondary btn-sm" href="https://github.com/Mitchelllorin/LearnIt3D-Electrical-Foundations/archive/refs/heads/main.zip">Download ZIP</a>
+</div>
+
 <!-- ══ DATA + APP (all local, offline) ════════════════════════════════ -->
 <script src="course/app/data/modules.js"></script>
 <script src="course/app/data/quizzes.js"></script>
 <script src="course/app/data/exams.js"></script>
 <script src="course/app/app.js"></script>
 <script>
+  let deferredInstallPrompt = null;
+  const installStrip = document.getElementById('install-strip');
+  const installBtn = document.getElementById('install-btn');
+
+  function setInstallMessage(message) {
+    const target = installStrip.querySelector('.install-copy span');
+    if (target) target.textContent = message;
+  }
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) {
+      setInstallMessage('If Install App is unavailable, use browser menu → Install LearnIt3D.');
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installBtn.disabled = true;
+    setInstallMessage('Installed. Launch LearnIt3D from your desktop icon.');
+  });
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installStrip.classList.add('visible');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installStrip.classList.add('visible');
+    installBtn.disabled = true;
+    setInstallMessage('Installed. Launch LearnIt3D from your desktop icon.');
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {
+        setInstallMessage('Offline install unavailable until Service Worker is enabled.');
+      });
+    });
+  }
+
   document.getElementById('splash').addEventListener('animationend', function () {
     this.classList.add('hidden');
   });
