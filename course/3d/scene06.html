@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnIt3D · Module 06 · Multimeter Simulator</title>
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;background:#0a0f2e;color:#fff;font-family:Arial,sans-serif}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;gap:16px;align-items:center;padding:12px 16px;background:rgba(10,15,46,.9);border-bottom:1px solid #00f5ff}
+    .topbar a{color:#00f5ff;text-decoration:none;font-weight:bold}
+    #canvas-container{position:fixed;inset:0}
+    #controls{position:fixed;top:64px;left:12px;z-index:15;background:rgba(9,16,45,.86);border:1px solid #00f5ff;border-radius:8px;padding:12px;max-width:280px}
+  </style>
+</head>
+<body>
+  <div class="topbar"><a href="index.html">← Back to modules</a><div>Module 06 · Multimeter 3D Simulation</div></div>
+  <div id="canvas-container"></div>
+  <div id="controls"></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+  <script src="scene06_multimeter.js"></script>
+</body>
+</html>
