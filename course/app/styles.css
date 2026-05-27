@@ -297,12 +297,17 @@ body {
 .lesson-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
 
 /* ─── SIMULATION ─────────────────────────────────── */
-.sim-wrapper { background: var(--card); border: 1px solid #1a3070; border-radius: var(--radius); padding: 20px; }
-.sim-header h3 { color: var(--border); margin-bottom: 6px; }
-.sim-header p { color: var(--muted); font-size: .9rem; margin-bottom: 16px; }
-.scene-frame-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #0d2060; background: #000; }
+.sim-inline {
+  margin: 28px 0;
+  background: var(--card);
+  border: 1px solid #1a3070;
+  border-radius: var(--radius);
+  padding: 20px 20px 16px;
+}
+.sim-inline h3 { color: var(--border); margin-bottom: 8px; }
+.scene-frame-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #0d2060; background: #000; margin-top: 10px; }
 .scene-frame { width: 100%; height: 540px; border: none; display: block; }
-.sim-controls-note { display: flex; gap: 20px; margin-top: 10px; color: var(--muted); font-size: .82rem; flex-wrap: wrap; }
+.sim-controls-note { color: var(--muted); font-size: .82rem; margin-bottom: 8px; }
 
 /* ─── PRACTICE ───────────────────────────────────── */
 .practice-body { background: var(--card); border: 1px solid #1a3070; border-radius: var(--radius); padding: 28px; }

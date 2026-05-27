@@ -152,7 +152,6 @@
         </div>
         <div class="tab-bar" id="module-tabs">
           <button class="tab active" data-tab="lesson" onclick="app.switchTab(this,'lesson')">📖 Lesson</button>
-          <button class="tab" data-tab="simulation" onclick="app.switchTab(this,'simulation')">🧊 3D Simulation</button>
           <button class="tab" data-tab="practice" onclick="app.switchTab(this,'practice')">🔧 Practice</button>
           ${q ? `<button class="tab" data-tab="quiz" onclick="app.switchTab(this,'quiz')">✅ Module Quiz</button>` : ''}
         </div>
@@ -166,29 +165,22 @@
             </div>
             <div class="lesson-text">${renderMD(m.lesson)}</div>
             ${m.examples ? `<div class="examples-box"><h3>🌍 Real-World Examples</h3>${renderMD(m.examples)}</div>` : ''}
+            ${m.sceneFile ? `
+            <div class="sim-inline">
+              <h3>🧊 Interactive 3D Simulation</h3>
+              <div class="sim-controls-note">
+                <span>🖱 Drag to rotate &nbsp;·&nbsp; 🔍 Scroll to zoom &nbsp;·&nbsp; ⬜ Right-click to pan</span>
+              </div>
+              <div class="scene-frame-wrap">
+                <iframe src="${m.sceneFile}" class="scene-frame" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>` : ''}
             ${m.diagrams ? `<div class="diagram-box"><h3>📐 Diagrams</h3><pre>${m.diagrams.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre></div>` : ''}
             <div class="lesson-actions">
               <button class="btn btn-primary" onclick="app.markDone(${id})">
                 ${done ? '✓ Marked Complete — Review Again' : '✔ Mark as Complete'}
               </button>
               ${q ? `<button class="btn btn-secondary" onclick="app.switchTabById('quiz')">Take Module Quiz →</button>` : ''}
-            </div>
-          </div>
-        </div>
-
-        <div id="tab-simulation" class="tab-content">
-          <div class="sim-wrapper">
-            <div class="sim-header">
-              <h3>🧊 Interactive 3D Simulation — Module ${id}</h3>
-              <p>${m.desc3d || 'Explore the 3D interactive simulation below.'}</p>
-            </div>
-            <div class="scene-frame-wrap">
-              <iframe id="scene-frame" src="${m.sceneFile}" class="scene-frame" allowfullscreen></iframe>
-            </div>
-            <div class="sim-controls-note">
-              <span>🖱 Drag to rotate</span>
-              <span>🔍 Scroll to zoom</span>
-              <span>⬜ Right-click to pan</span>
             </div>
           </div>
         </div>
