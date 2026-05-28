@@ -45,3 +45,18 @@ For signed release AAB output in CI, set these repository secrets:
 - `ANDROID_KEY_PASSWORD`
 
 If signing secrets are not set, CI still builds the Android release bundle using fallback debug signing for compatibility checks.
+
+## iOS signing secrets for App Store/TestFlight export
+
+For signed iOS archive + optional IPA export in CI, set:
+
+- `IOS_BUILD_CERTIFICATE_BASE64` (P12 certificate)
+- `IOS_BUILD_CERTIFICATE_PASSWORD`
+- `IOS_KEYCHAIN_PASSWORD`
+- `IOS_BUILD_PROVISION_PROFILE_BASE64`
+- `IOS_DEVELOPMENT_TEAM`
+- `IOS_PROVISIONING_PROFILE_SPECIFIER`
+- `IOS_CODE_SIGN_IDENTITY`
+- `IOS_EXPORT_METHOD` (`app-store`, `ad-hoc`, `development`, or `enterprise`)
+
+If iOS signing secrets are not set, CI still produces an unsigned compatibility archive.
