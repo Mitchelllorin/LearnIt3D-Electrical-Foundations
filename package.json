@@ -28,6 +28,7 @@
   "build": {
     "appId": "com.learnit3d.electricalfoundations",
     "productName": "LearnIt3D Electrical Foundations",
+    "icon": "build/icon.png",
     "files": [
       "electron/**/*",
       "dist/web/**/*",
@@ -60,7 +61,7 @@
           ]
         }
       ],
-      "artifactName": "${productName}-${version}-${target}.${ext}"
+      "artifactName": "learnit3d-electrical-foundations-${target}.${ext}"
     },
     "appx": {
       "identityName": "LearnIt3D.ElectricalFoundations",

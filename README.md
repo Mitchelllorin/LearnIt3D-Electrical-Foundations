@@ -1,5 +1,10 @@
 ﻿Electrical Foundations Apprenticeship Prep course under the LearnIT3D brand.
 
+## Download desktop installer
+
+🖥️ **Windows Installer (latest):**  
+https://github.com/Mitchelllorin/LearnIt3D-Electrical-Foundations/releases/latest/download/learnit3d-electrical-foundations-nsis.exe
+
 ## LearnIt3D mini-app build pipeline
 
 This repository includes a repeatable mobile-first packaging workflow for the interactive 3D course in `/course/3d` using one shared production web build.
