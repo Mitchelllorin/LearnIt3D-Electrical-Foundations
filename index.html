@@ -79,9 +79,11 @@
     }
 
     .splash-brand { font-family:'Segoe UI',Arial,sans-serif; text-align:center; }
-    .splash-title { font-size:2.6rem; font-weight:900; color:#00f5ff; letter-spacing:.04em;
+    .splash-title { font-size:2.6rem; font-weight:900; letter-spacing:.04em;
       text-shadow:0 0 20px rgba(0,245,255,.6); line-height:1; }
-    .splash-dash { color:#ff8c00; }
+    .splash-title .brand-learn { color:#2f7dff; }
+    .splash-title .brand-it { color:#ff8c00; font-style:italic; }
+    .splash-title .brand-3d { color:#00d86f; font-style:normal; }
     .splash-subtitle { font-size:1.05rem; color:#d8ecff; margin-top:6px; letter-spacing:.06em; }
     .splash-tagline { font-size:.82rem; color:#6a8fbb; letter-spacing:.18em;
       text-transform:uppercase; margin-top:4px; }
@@ -125,7 +127,9 @@
       <div class="orbit-dot d2"></div>
     </div>
     <div class="splash-brand">
-      <div class="splash-title">LearnIt<span class="splash-dash">3</span>D</div>
+      <div class="splash-title">
+        <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span>
+      </div>
       <div class="splash-subtitle">Electrical Foundations</div>
       <div class="splash-tagline">
         <span class="splash-dots">■</span>&nbsp;
@@ -145,7 +149,7 @@
   <div class="sidebar-brand" onclick="app.goto('dashboard')">
     <span class="brand-icon">⚡</span>
     <div class="brand-text">
-      <div class="brand-name">LearnIt3D</div>
+      <div class="brand-name"><span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span></div>
       <div class="brand-sub">Electrical Foundations</div>
     </div>
   </div>
@@ -154,7 +158,7 @@
 
 <div class="topbar">
   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-  <span class="topbar-title">⚡ LearnIt3D — Electrical Foundations</span>
+  <span class="topbar-title">⚡ <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span> — Electrical Foundations</span>
 </div>
 
 <main id="main-content" class="main-content"></main>
@@ -162,7 +166,7 @@
 <div id="install-strip" class="install-strip visible" aria-live="polite">
   <img src="assets/cover.png" alt="LearnIt3D cover artwork" class="install-cover">
   <div class="install-copy">
-    <strong>Install LearnIt3D</strong>
+    <strong>Install <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span></strong>
     <span>One click install creates a desktop icon to open the course directly.</span>
   </div>
   <button id="install-btn" class="btn btn-primary btn-sm" type="button">Install App</button>

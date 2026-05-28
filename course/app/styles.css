@@ -25,6 +25,11 @@ body {
   overflow-x: hidden;
 }
 
+.brand-lockup { display: inline-flex; align-items: baseline; gap: 0; }
+.brand-learn { color: #2f7dff; }
+.brand-it { color: #ff8c00; font-style: italic; }
+.brand-3d { color: #00d86f; }
+
 /* ─── SIDEBAR ────────────────────────────────────── */
 #sidebar {
   width: var(--sidebar);

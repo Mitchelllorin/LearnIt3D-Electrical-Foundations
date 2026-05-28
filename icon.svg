@@ -36,7 +36,11 @@
   <!-- Inner glow dot -->
   <circle cx="128" cy="128" r="6" fill="#ff8c00" filter="url(#glow)"/>
   
-  <!-- Text: L3D -->
-  <text x="128" y="246" text-anchor="middle" font-family="Arial Black, sans-serif" 
-        font-size="14" font-weight="900" fill="#00f5ff" letter-spacing="3">L3D</text>
+  <!-- Text: LearnIt3D -->
+  <text x="72" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-weight="900" fill="#2f7dff">Learn</text>
+  <text x="134" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-style="italic" font-weight="900" fill="#ff8c00">It</text>
+  <text x="152" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-weight="900" fill="#00d86f">3D</text>
 </svg>
