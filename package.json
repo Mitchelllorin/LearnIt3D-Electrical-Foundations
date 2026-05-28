@@ -1,0 +1,56 @@
+{
+  "name": "learnit3d-electrical-foundations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LearnIt3D Electrical Foundations desktop packaging",
+  "main": "electron/main.js",
+  "scripts": {
+    "build:web": "vite build",
+    "package:dir": "npm run build:web && electron-builder --dir",
+    "package:win": "npm run build:web && electron-builder --win nsis portable",
+    "start:desktop": "npm run build:web && electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.4.8"
+  },
+  "build": {
+    "appId": "com.learnit3d.electricalfoundations",
+    "productName": "LearnIt3D Electrical Foundations",
+    "files": [
+      "electron/**/*",
+      "dist/web/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist/desktop"
+    },
+    "extraMetadata": {
+      "main": "electron/main.js"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${target}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "LearnIt3D Electrical Foundations"
+    }
+  }
+}
