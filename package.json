@@ -5,7 +5,7 @@
   "description": "LearnIt3D Electrical Foundations desktop packaging",
   "main": "electron/main.js",
   "scripts": {
-    "build:web": "vite build",
+    "build:web": "node scripts/build-web.mjs",
     "package:dir": "npm run build:web && electron-builder --dir",
     "package:win": "npm run build:web && electron-builder --win nsis portable",
     "start:desktop": "npm run build:web && electron ."
