@@ -6,11 +6,21 @@
   "main": "electron/main.js",
   "scripts": {
     "build:web": "node scripts/build-web.mjs",
+    "verify:smoke": "node scripts/smoke-check.mjs",
+    "sync:android": "npm run build:web && npx cap sync android",
+    "sync:ios": "npm run build:web && npx cap sync ios",
+    "sync:native": "npm run build:web && npx cap sync",
+    "package:android:aab": "npm run sync:android && cd android && ./gradlew bundleRelease",
+    "package:ios:archive": "npm run sync:ios && xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release -sdk iphoneos -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive archive CODE_SIGNING_ALLOWED=NO",
     "package:dir": "npm run build:web && electron-builder --dir",
-    "package:win": "npm run build:web && electron-builder --win nsis portable",
+    "package:win": "npm run build:web && electron-builder --win nsis portable appx",
     "start:desktop": "npm run build:web && electron ."
   },
   "devDependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
     "electron": "^31.7.7",
     "electron-builder": "^24.13.3",
     "vite": "^5.4.8"
@@ -42,9 +52,23 @@
           "arch": [
             "x64"
           ]
+        },
+        {
+          "target": "appx",
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "artifactName": "${productName}-${version}-${target}.${ext}"
+    },
+    "appx": {
+      "identityName": "LearnIt3D.ElectricalFoundations",
+      "publisher": "CN=LearnIt3D",
+      "publisherDisplayName": "LearnIt3D",
+      "applicationId": "LearnIt3DElectricalFoundations",
+      "displayName": "LearnIt3D Electrical Foundations",
+      "backgroundColor": "#0a0f2e"
     },
     "nsis": {
       "oneClick": false,
@@ -52,5 +76,11 @@
       "createDesktopShortcut": true,
       "shortcutName": "LearnIt3D Electrical Foundations"
     }
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4"
   }
 }

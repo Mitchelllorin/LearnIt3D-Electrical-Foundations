@@ -1,4 +1,4 @@
-name: Build Desktop App
+name: Build Multi-Platform LearnIt3D App
 
 on:
   workflow_dispatch:
@@ -11,8 +11,136 @@ permissions:
   contents: read
 
 jobs:
+  verify-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared web course
+        run: npm run build:web
+
+      - name: Smoke verify course entrypoint
+        run: npm run verify:smoke
+
+      - name: Upload web build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/web
+          if-no-files-found: error
+
+  build-android:
+    runs-on: ubuntu-latest
+    needs: verify-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Android project
+        run: npm run sync:android
+
+      - name: Restore Android upload keystore
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        shell: bash
+        run: |
+          mkdir -p android/keystore
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/keystore/upload.keystore
+
+      - name: Build Android AAB
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_PATH: ../keystore/upload.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          cd android
+          ./gradlew bundleRelease --no-daemon
+
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab
+          path: |
+            android/app/build/outputs/bundle/release/*.aab
+            android/app/build/outputs/mapping/release
+          if-no-files-found: error
+
+  build-ios:
+    runs-on: macos-latest
+    needs: verify-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync iOS project
+        run: npm run sync:ios
+
+      - name: Build iOS archive (unsigned compatibility build)
+        shell: bash
+        run: |
+          mkdir -p dist/ios
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive \
+            archive \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package iOS app bundle
+        shell: bash
+        run: |
+          cd dist/ios
+          ditto -c -k --sequesterRsrc --keepParent LearnIt3D-Electrical-Foundations.xcarchive/Products/Applications/App.app LearnIt3D-Electrical-Foundations-app.zip
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: |
+            dist/ios/LearnIt3D-Electrical-Foundations.xcarchive
+            dist/ios/LearnIt3D-Electrical-Foundations-app.zip
+          if-no-files-found: error
+
   build-windows:
     runs-on: windows-latest
+    needs: verify-web
 
     steps:
       - name: Checkout
@@ -27,20 +155,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build web course
-        run: npm run build:web
-
-      - name: Package Windows desktop app
+      - name: Build and package Windows desktop app
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: npm run package:win
 
-      - name: Upload web build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-build
-          path: dist/web
-          if-no-files-found: error
-
-      - name: Upload desktop build artifacts
+      - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-desktop-build
