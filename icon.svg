@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0b2050"/>
+      <stop offset="100%" stop-color="#050c22"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="124" fill="url(#bg)" stroke="#00f5ff" stroke-width="3"/>
+  
+  <!-- Outer circuit ring decoration -->
+  <circle cx="128" cy="128" r="108" fill="none" stroke="#0d2060" stroke-width="1" stroke-dasharray="6 4"/>
+  
+  <!-- Circuit nodes -->
+  <circle cx="128" cy="20"  r="5" fill="#ff8c00"/>
+  <circle cx="236" cy="128" r="5" fill="#00ff88"/>
+  <circle cx="128" cy="236" r="5" fill="#ff8c00"/>
+  <circle cx="20"  cy="128" r="5" fill="#00ff88"/>
+  
+  <!-- Circuit trace lines -->
+  <line x1="128" y1="20"  x2="128" y2="50"  stroke="#ff8c00" stroke-width="2"/>
+  <line x1="236" y1="128" x2="206" y2="128" stroke="#00ff88" stroke-width="2"/>
+  <line x1="128" y1="236" x2="128" y2="206" stroke="#ff8c00" stroke-width="2"/>
+  <line x1="20"  y1="128" x2="50"  y2="128" stroke="#00ff88" stroke-width="2"/>
+  
+  <!-- Lightning bolt (⚡) — main symbol -->
+  <polygon points="148,44 88,136 126,136 108,212 172,108 134,108" 
+           fill="#00f5ff" filter="url(#glow)" opacity="0.95"/>
+  <polygon points="148,44 88,136 126,136 108,212 172,108 134,108" 
+           fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.4"/>
+  
+  <!-- Inner glow dot -->
+  <circle cx="128" cy="128" r="6" fill="#ff8c00" filter="url(#glow)"/>
+  
+  <!-- Text: LearnIt3D -->
+  <text x="72" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-weight="900" fill="#2f7dff">Learn</text>
+  <text x="134" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-style="italic" font-weight="900" fill="#ff8c00">It</text>
+  <text x="152" y="246" text-anchor="start" font-family="Arial Black, sans-serif"
+        font-size="18" font-weight="900" fill="#00d86f">3D</text>
+</svg>

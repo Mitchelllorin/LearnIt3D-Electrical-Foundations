@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnIt3D — Electrical Foundations</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#050c22">
+  <meta name="description" content="LearnIt3D Electrical Foundations apprenticeship prep course with installable offline access.">
+  <meta property="og:image" content="assets/cover.png">
+  <link rel="stylesheet" href="course/app/styles.css">
+  <style>
+    /* ── SPLASH SCREEN ────────────────────────────────── */
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #050c22;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      animation: splashFadeOut 0.6s ease-in 3.2s forwards;
+    }
+    #splash.hidden { display: none; }
+    @keyframes splashFadeOut { to { opacity: 0; pointer-events: none; } }
+
+    .splash-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridPulse 3s ease-in-out infinite;
+    }
+    @keyframes gridPulse { 50% { opacity: 0.4; } }
+
+    .splash-trace {
+      position: absolute;
+      border: 2px solid transparent;
+      width: 80px; height: 80px;
+    }
+    .splash-trace.tl { top:20px;left:20px; border-top-color:#ff8c00;border-left-color:#ff8c00; }
+    .splash-trace.tr { top:20px;right:20px; border-top-color:#00ff88;border-right-color:#00ff88; }
+    .splash-trace.bl { bottom:20px;left:20px; border-bottom-color:#00ff88;border-left-color:#00ff88; }
+    .splash-trace.br { bottom:20px;right:20px; border-bottom-color:#ff8c00;border-right-color:#ff8c00; }
+
+    .splash-logo-wrap {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      animation: logoIn 0.8s cubic-bezier(.22,1,.36,1) 0.3s both;
+    }
+    @keyframes logoIn {
+      from { opacity:0; transform:scale(0.7) translateY(30px); }
+      to   { opacity:1; transform:scale(1) translateY(0); }
+    }
+
+    .splash-icon-ring {
+      width:120px; height:120px; border-radius:50%;
+      background: radial-gradient(circle at 40% 35%, #0b2050, #050c22);
+      border: 3px solid #00f5ff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:4.5rem;
+      box-shadow: 0 0 40px rgba(0,245,255,.4), inset 0 0 30px rgba(0,245,255,.08);
+      margin-bottom:24px; position:relative;
+      animation: ringPulse 2s ease-in-out 1s infinite;
+    }
+    @keyframes ringPulse {
+      0%,100% { box-shadow: 0 0 40px rgba(0,245,255,.4), inset 0 0 30px rgba(0,245,255,.08); }
+      50%      { box-shadow: 0 0 70px rgba(0,245,255,.7), inset 0 0 40px rgba(0,245,255,.14); }
+    }
+
+    .orbit-dot {
+      position:absolute; width:12px; height:12px; border-radius:50%;
+      top:-6px; left:50%; margin-left:-6px;
+    }
+    .orbit-dot.d1 { background:#ff8c00; animation: orbit 2.5s linear infinite; }
+    .orbit-dot.d2 { background:#00ff88; animation: orbit 2.5s linear -1.25s infinite; }
+    @keyframes orbit {
+      from { transform: rotate(0deg)   translateY(-66px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateY(-66px) rotate(-360deg); }
+    }
+
+    .splash-brand { font-family:'Segoe UI',Arial,sans-serif; text-align:center; }
+    .splash-title { font-size:2.6rem; font-weight:900; letter-spacing:.04em;
+      text-shadow:0 0 20px rgba(0,245,255,.6); line-height:1; }
+    .splash-title .brand-learn { color:#2f7dff; }
+    .splash-title .brand-it { color:#ff8c00; font-style:italic; }
+    .splash-title .brand-3d { color:#00d86f; font-style:normal; }
+    .splash-subtitle { font-size:1.05rem; color:#d8ecff; margin-top:6px; letter-spacing:.06em; }
+    .splash-tagline { font-size:.82rem; color:#6a8fbb; letter-spacing:.18em;
+      text-transform:uppercase; margin-top:4px; }
+    .splash-dots { color:#ff8c00; }
+
+    .splash-loader-wrap {
+      position:relative; z-index:1; margin-top:40px; width:280px;
+      animation: loaderIn 0.6s ease 1s both;
+    }
+    @keyframes loaderIn { from { opacity:0; } to { opacity:1; } }
+    .splash-loader-track { height:4px; border-radius:999px; background:#0d2060; overflow:hidden; }
+    .splash-loader-fill {
+      height:100%; width:0%; border-radius:999px;
+      background: linear-gradient(90deg, #00f5ff, #00ff88);
+      animation: loadFill 2s ease 1s forwards;
+    }
+    @keyframes loadFill { to { width:100%; } }
+    .splash-loader-text { font-size:.75rem; color:#6a8fbb; text-align:center;
+      margin-top:10px; letter-spacing:.1em; }
+    #splash::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px, rgba(0,0,0,.07) 2px, rgba(0,0,0,.07) 4px
+      );
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ SPLASH ════════════════════════════════════════════════════════ -->
+<div id="splash">
+  <div class="splash-grid"></div>
+  <div class="splash-trace tl"></div>
+  <div class="splash-trace tr"></div>
+  <div class="splash-trace bl"></div>
+  <div class="splash-trace br"></div>
+  <div class="splash-logo-wrap">
+    <div class="splash-icon-ring">
+      ⚡
+      <div class="orbit-dot d1"></div>
+      <div class="orbit-dot d2"></div>
+    </div>
+    <div class="splash-brand">
+      <div class="splash-title">
+        <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span>
+      </div>
+      <div class="splash-subtitle">Electrical Foundations</div>
+      <div class="splash-tagline">
+        <span class="splash-dots">■</span>&nbsp;
+        STEM &nbsp;·&nbsp; SIMULATED &nbsp;·&nbsp; 3D
+        &nbsp;<span class="splash-dots">■</span>
+      </div>
+    </div>
+  </div>
+  <div class="splash-loader-wrap">
+    <div class="splash-loader-track"><div class="splash-loader-fill"></div></div>
+    <div class="splash-loader-text">LOADING COURSE</div>
+  </div>
+</div>
+
+<!-- ══ APP SHELL ══════════════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div class="sidebar-brand" onclick="app.goto('dashboard')">
+    <span class="brand-icon">⚡</span>
+    <div class="brand-text">
+      <div class="brand-name"><span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span></div>
+      <div class="brand-sub">Electrical Foundations</div>
+    </div>
+  </div>
+  <nav id="sidebar-nav"></nav>
+</aside>
+
+<div class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <span class="topbar-title">⚡ <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span> — Electrical Foundations</span>
+</div>
+
+<main id="main-content" class="main-content"></main>
+
+<div id="install-strip" class="install-strip visible" aria-live="polite">
+  <img src="assets/cover.png" alt="LearnIt3D cover artwork" class="install-cover">
+  <div class="install-copy">
+    <strong>Install <span class="brand-lockup"><span class="brand-learn">Learn</span><span class="brand-it">It</span><span class="brand-3d">3D</span></span></strong>
+    <span>One click install creates a desktop icon to open the course directly.</span>
+  </div>
+  <button id="install-btn" class="btn btn-primary btn-sm" type="button">Install App</button>
+  <a class="btn btn-secondary btn-sm" href="https://github.com/Mitchelllorin/LearnIt3D-Electrical-Foundations/archive/refs/heads/main.zip">Download ZIP</a>
+</div>
+
+<!-- ══ DATA + APP (all local, offline) ════════════════════════════════ -->
+<script src="course/app/data/modules.js"></script>
+<script src="course/app/data/quizzes.js"></script>
+<script src="course/app/data/exams.js"></script>
+<script src="course/app/app.js"></script>
+<script>
+  let deferredInstallPrompt = null;
+  const installStrip = document.getElementById('install-strip');
+  const installBtn = document.getElementById('install-btn');
+
+  function setInstallMessage(message) {
+    const target = installStrip.querySelector('.install-copy span');
+    if (target) target.textContent = message;
+  }
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) {
+      setInstallMessage('If Install App is unavailable, use browser menu → Install LearnIt3D.');
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installBtn.disabled = true;
+    setInstallMessage('Installed. Launch LearnIt3D from your desktop icon.');
+  });
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installStrip.classList.add('visible');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installStrip.classList.add('visible');
+    installBtn.disabled = true;
+    setInstallMessage('Installed. Launch LearnIt3D from your desktop icon.');
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {
+        setInstallMessage('Offline install unavailable until Service Worker is enabled.');
+      });
+    });
+  }
+
+  document.getElementById('splash').addEventListener('animationend', function () {
+    this.classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
