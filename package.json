@@ -1,0 +1,81 @@
+{
+  "name": "learnit3d-electrical-foundations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LearnIt3D Electrical Foundations desktop packaging",
+  "main": "electron/main.js",
+  "scripts": {
+    "build:web": "node scripts/build-web.mjs",
+    "verify:smoke": "node scripts/smoke-check.mjs",
+    "sync:android": "npm run build:web && npx cap sync android",
+    "sync:ios": "npm run build:web && npx cap sync ios",
+    "sync:native": "npm run build:web && npx cap sync",
+    "package:android:aab": "npm run sync:android && cd android && ./gradlew bundleRelease",
+    "package:ios:archive": "npm run sync:ios && xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release -sdk iphoneos -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive archive CODE_SIGNING_ALLOWED=NO",
+    "package:dir": "npm run build:web && electron-builder --dir",
+    "package:win": "npm run build:web && electron-builder --win nsis portable appx",
+    "start:desktop": "npm run build:web && electron ."
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4",
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.4.8"
+  },
+  "build": {
+    "appId": "com.learnit3d.electricalfoundations",
+    "productName": "LearnIt3D Electrical Foundations",
+    "icon": "build/icon.png",
+    "files": [
+      "electron/**/*",
+      "dist/web/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist/desktop"
+    },
+    "extraMetadata": {
+      "main": "electron/main.js"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "appx",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "learnit3d-electrical-foundations-${target}.${ext}"
+    },
+    "appx": {
+      "identityName": "LearnIt3D.ElectricalFoundations",
+      "publisher": "CN=LearnIt3D",
+      "publisherDisplayName": "LearnIt3D",
+      "applicationId": "LearnIt3DElectricalFoundations",
+      "displayName": "LearnIt3D Electrical Foundations",
+      "backgroundColor": "#0a0f2e"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "LearnIt3D Electrical Foundations"
+    }
+  }
+}

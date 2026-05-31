@@ -1,0 +1,241 @@
+name: Build Multi-Platform LearnIt3D App
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared web course
+        run: npm run build:web
+
+      - name: Smoke verify course entrypoint
+        run: npm run verify:smoke
+
+      - name: Upload web build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/web
+          if-no-files-found: error
+
+  build-android:
+    runs-on: ubuntu-latest
+    needs: verify-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Android project
+        run: npm run sync:android
+
+      - name: Restore Android upload keystore
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        shell: bash
+        run: |
+          mkdir -p android/keystore
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/keystore/upload.keystore
+
+      - name: Build Android AAB
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_PATH: ../keystore/upload.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          cd android
+          ./gradlew bundleRelease --no-daemon
+
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab
+          path: |
+            android/app/build/outputs/bundle/release/*.aab
+            android/app/build/outputs/mapping/release
+          if-no-files-found: error
+
+  build-ios:
+    runs-on: macos-latest
+    needs: verify-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync iOS project
+        run: npm run sync:ios
+
+      - name: Import iOS signing certificate
+        if: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' }}
+        shell: bash
+        run: |
+          CERT_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo -n "${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}" | base64 --decode > "$CERT_PATH"
+          security create-keychain -p "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          security import "$CERT_PATH" -P "${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH"
+
+      - name: Install provisioning profile
+        if: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
+        shell: bash
+        run: |
+          PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          echo -n "${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 }}" | base64 --decode > "$PROFILE_PATH"
+          cp "$PROFILE_PATH" "$HOME/Library/MobileDevice/Provisioning Profiles"
+
+      - name: Build iOS archive (signed)
+        if: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && secrets.IOS_DEVELOPMENT_TEAM != '' && secrets.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && secrets.IOS_CODE_SIGN_IDENTITY != '' }}
+        shell: bash
+        run: |
+          mkdir -p dist/ios
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive \
+            archive \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM="${{ secrets.IOS_DEVELOPMENT_TEAM }}" \
+            PROVISIONING_PROFILE_SPECIFIER="${{ secrets.IOS_PROVISIONING_PROFILE_SPECIFIER }}" \
+            CODE_SIGN_IDENTITY="${{ secrets.IOS_CODE_SIGN_IDENTITY }}"
+
+      - name: Build iOS archive (unsigned compatibility fallback)
+        if: ${{ !(secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && secrets.IOS_DEVELOPMENT_TEAM != '' && secrets.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && secrets.IOS_CODE_SIGN_IDENTITY != '') }}
+        shell: bash
+        run: |
+          mkdir -p dist/ios
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive \
+            archive \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Generate ExportOptions.plist
+        if: ${{ secrets.IOS_EXPORT_METHOD != '' }}
+        shell: bash
+        run: |
+          cat <<'EOF' > dist/ios/ExportOptions.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+            <dict>
+              <key>method</key>
+              <string>${{ secrets.IOS_EXPORT_METHOD }}</string>
+              <key>signingStyle</key>
+              <string>manual</string>
+              <key>teamID</key>
+              <string>${{ secrets.IOS_DEVELOPMENT_TEAM }}</string>
+              <key>compileBitcode</key>
+              <false/>
+            </dict>
+          </plist>
+          EOF
+
+      - name: Export signed IPA
+        if: ${{ secrets.IOS_EXPORT_METHOD != '' && secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
+        shell: bash
+        run: |
+          xcodebuild \
+            -exportArchive \
+            -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive \
+            -exportPath dist/ios \
+            -exportOptionsPlist dist/ios/ExportOptions.plist
+
+      - name: Package iOS app bundle
+        shell: bash
+        run: |
+          cd dist/ios
+          ditto -c -k --sequesterRsrc --keepParent LearnIt3D-Electrical-Foundations.xcarchive/Products/Applications/App.app LearnIt3D-Electrical-Foundations-app.zip
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: |
+            dist/ios/LearnIt3D-Electrical-Foundations.xcarchive
+            dist/ios/LearnIt3D-Electrical-Foundations-app.zip
+            dist/ios/*.ipa
+          if-no-files-found: error
+
+  build-windows:
+    runs-on: windows-latest
+    needs: verify-web
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and package Windows desktop app
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: npm run package:win
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-desktop-build
+          path: dist/desktop
+          if-no-files-found: error
