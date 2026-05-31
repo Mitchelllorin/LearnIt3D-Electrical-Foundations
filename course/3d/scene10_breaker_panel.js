@@ -30,7 +30,12 @@ function init() {
   const dl=new THREE.DirectionalLight(0xffffff,0.8); dl.position.set(3,5,5); scene.add(dl);
 
   // Panel enclosure
-  scene.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(2.2,3.2,0.3),new THREE.MeshStandardMaterial({color:0x556677})),{position:new THREE.Vector3(0,0,-0.2)}));
+  const panel = new THREE.Mesh(
+    new THREE.BoxGeometry(2.2,3.2,0.3),
+    new THREE.MeshStandardMaterial({color:0x556677})
+  );
+  panel.position.set(0,0,-0.2);
+  scene.add(panel);
 
   BREAKER_DATA.forEach(b => {
     const w = b.double ? 0.7 : 0.32, h = b.double ? 0.25 : 0.22;
