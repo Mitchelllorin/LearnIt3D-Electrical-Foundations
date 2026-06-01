@@ -30,10 +30,10 @@
       { "id": "bed_on", "label": "Bedroom Breaker", "default": true }
     ],
     "sliders": [
-      { "id": "kitchen_load", "label": "Kitchen Load (%)", "min": 0, "max": 130, "step": 5, "default": 60 },
-      { "id": "bath_load", "label": "Bathroom Load (%)", "min": 0, "max": 130, "step": 5, "default": 45 },
-      { "id": "living_load", "label": "Living Room Load (%)", "min": 0, "max": 130, "step": 5, "default": 40 },
-      { "id": "bed_load", "label": "Bedroom Load (%)", "min": 0, "max": 130, "step": 5, "default": 35 }
+      { "id": "kitchen_load", "label": "Kitchen Load (%)", "min": 0, "max": 110, "step": 5, "default": 60 },
+      { "id": "bath_load", "label": "Bathroom Load (%)", "min": 0, "max": 110, "step": 5, "default": 45 },
+      { "id": "living_load", "label": "Living Room Load (%)", "min": 0, "max": 110, "step": 5, "default": 40 },
+      { "id": "bed_load", "label": "Bedroom Load (%)", "min": 0, "max": 110, "step": 5, "default": 35 }
     ]
   },
   "circuitBuilderBasics": {

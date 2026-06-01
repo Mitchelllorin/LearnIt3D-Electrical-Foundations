@@ -32,7 +32,7 @@
       { "id": "fault_reverse_polarity", "label": "Inject Reverse Polarity", "default": false }
     ],
     "sliders": [
-      { "id": "load_intensity", "label": "Load Intensity (%)", "min": 10, "max": 120, "step": 5, "default": 55 },
+      { "id": "load_intensity", "label": "Load Intensity (%)", "min": 0, "max": 120, "step": 5, "default": 55 },
       { "id": "contact_resistance", "label": "Loose Connection (Ω)", "min": 0, "max": 25, "step": 1, "default": 2 }
     ]
   },
