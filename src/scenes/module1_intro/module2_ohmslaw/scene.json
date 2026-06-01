@@ -1,0 +1,55 @@
+{
+  "id": "module2_math",
+  "moduleNumber": 2,
+  "title": "Ohm's Law Math Bench",
+  "sceneType": "calculator_sim",
+  "sourceModules": [2],
+  "libraryReference": "Ohm's Law Calculator Scene",
+  "summary": "A 3D calculation station uses sliders, digital meters, and preset examples to connect voltage, current, and resistance relationships to apprentice-level trade math.",
+  "learningObjectives": [
+    "Use Ohm's Law to solve for voltage, current, or resistance.",
+    "Interpret units for volts, amps, and ohms correctly.",
+    "Connect numeric changes to practical circuit behavior."
+  ],
+  "environment": {
+    "setting": "Interactive formula bench with three large controls, live meter displays, and worked-example presets",
+    "focus": "Visual math practice with immediate feedback"
+  },
+  "interactables": [
+    {
+      "id": "voltage_slider",
+      "label": "Voltage control",
+      "type": "slider",
+      "teaches": "Increasing source pressure changes current when resistance is fixed."
+    },
+    {
+      "id": "current_slider",
+      "label": "Current control",
+      "type": "slider",
+      "teaches": "Shows how current depends on both source voltage and circuit resistance."
+    },
+    {
+      "id": "resistance_slider",
+      "label": "Resistance control",
+      "type": "slider",
+      "teaches": "Demonstrates how opposition to current affects circuit response."
+    },
+    {
+      "id": "formula_panel",
+      "label": "Formula helper",
+      "type": "coach",
+      "teaches": "Displays V = I x R, I = V / R, and R = V / I based on the selected unknown."
+    }
+  ],
+  "tasks": [
+    "Match a target example such as 120 V with 12 ohms.",
+    "Adjust one variable and predict the resulting current before the meter updates.",
+    "Select the correct rearranged formula for the unknown value.",
+    "Complete three trade-style calculation challenges in sequence."
+  ],
+  "completion": [
+    "Learner solves for all three Ohm's Law variables.",
+    "Learner uses correct units on every challenge.",
+    "Learner completes the example set without coaching prompts."
+  ]
+}
