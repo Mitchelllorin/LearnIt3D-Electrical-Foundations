@@ -1,0 +1,62 @@
+{
+  "id": "interactive3",
+  "title": "Three-Way Switch Wiring Diagram Trainer",
+  "theme": "wiring-diagram",
+  "description": "Trace and assemble a residential three-way lighting circuit with traveler conductors.",
+  "diagram": {
+    "canvas": "schematic",
+    "nodes": [
+      { "id": "line_hot", "label": "Line Hot", "x": 8, "y": 50, "type": "source" },
+      { "id": "sw_a", "label": "3-Way Switch A", "x": 30, "y": 40, "type": "switch" },
+      { "id": "sw_b", "label": "3-Way Switch B", "x": 58, "y": 40, "type": "switch" },
+      { "id": "lamp", "label": "Ceiling Lamp", "x": 82, "y": 40, "type": "load" },
+      { "id": "neutral", "label": "Neutral Return", "x": 82, "y": 70, "type": "source" },
+      { "id": "ground", "label": "Equipment Ground", "x": 10, "y": 82, "type": "source" }
+    ],
+    "wires": [
+      { "id": "tw1", "from": "line_hot", "to": "sw_a", "color": "black", "gaugeAwg": 14 },
+      { "id": "tw2", "from": "sw_a", "to": "sw_b", "color": "red", "gaugeAwg": 14 },
+      { "id": "tw3", "from": "sw_a", "to": "sw_b", "color": "white", "gaugeAwg": 14, "reidentified": true },
+      { "id": "tw4", "from": "sw_b", "to": "lamp", "color": "black", "gaugeAwg": 14 },
+      { "id": "tw5", "from": "neutral", "to": "lamp", "color": "white", "gaugeAwg": 14 },
+      { "id": "tw6", "from": "ground", "to": "sw_a", "color": "green", "gaugeAwg": 14 },
+      { "id": "tw7", "from": "ground", "to": "sw_b", "color": "green", "gaugeAwg": 14 },
+      { "id": "tw8", "from": "ground", "to": "lamp", "color": "green", "gaugeAwg": 14 }
+    ]
+  },
+  "controls": {
+    "toggles": [
+      { "id": "switch_a_state", "label": "Switch A Position", "default": false },
+      { "id": "switch_b_state", "label": "Switch B Position", "default": false },
+      { "id": "display_travelers", "label": "Highlight Traveler Wires", "default": true }
+    ],
+    "sliders": [
+      { "id": "line_voltage", "label": "Supply Voltage (V)", "min": 110, "max": 125, "step": 1, "default": 120 },
+      { "id": "lamp_wattage", "label": "Lamp Wattage (W)", "min": 40, "max": 100, "step": 5, "default": 75 }
+    ]
+  },
+  "circuitBuilderBasics": {
+    "requiredConnections": ["common-terminal-source", "traveler-pair-between-switches", "load-on-second-common"],
+    "forbiddenConnections": ["neutral-through-switch-common", "missing-ground-bond"]
+  },
+  "tasks": [
+    {
+      "id": "label-travelers",
+      "type": "labeling",
+      "prompt": "Label the two traveler conductors correctly.",
+      "targets": ["tw2", "tw3"]
+    },
+    {
+      "id": "switch-logic",
+      "type": "toggle",
+      "prompt": "Find all toggle combinations that energize the lamp.",
+      "dependsOn": ["switch_a_state", "switch_b_state"]
+    },
+    {
+      "id": "complete-three-way-build",
+      "type": "builder",
+      "prompt": "Construct a valid three-way circuit that passes continuity check.",
+      "successMetric": "lamp_continuity_true"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "interactive1",
+  "title": "Residential Branch Circuit Wiring Lab",
+  "theme": "wiring-diagram",
+  "description": "Build and label a standard 120V branch circuit from panel to receptacle.",
+  "diagram": {
+    "canvas": "top-down",
+    "nodes": [
+      { "id": "panel_hot", "label": "Panel Hot Bus", "x": 8, "y": 45, "type": "source" },
+      { "id": "panel_neutral", "label": "Neutral Bar", "x": 8, "y": 65, "type": "source" },
+      { "id": "panel_ground", "label": "Ground Bar", "x": 8, "y": 82, "type": "source" },
+      { "id": "breaker_20a", "label": "20A Breaker", "x": 22, "y": 45, "type": "protection" },
+      { "id": "switch_spst", "label": "Wall Switch", "x": 48, "y": 45, "type": "switch" },
+      { "id": "light_load", "label": "Light Fixture", "x": 76, "y": 45, "type": "load" },
+      { "id": "receptacle", "label": "Duplex Receptacle", "x": 76, "y": 72, "type": "load" }
+    ],
+    "wires": [
+      { "id": "w1", "from": "panel_hot", "to": "breaker_20a", "color": "black", "gaugeAwg": 12 },
+      { "id": "w2", "from": "breaker_20a", "to": "switch_spst", "color": "black", "gaugeAwg": 12 },
+      { "id": "w3", "from": "switch_spst", "to": "light_load", "color": "black", "gaugeAwg": 12 },
+      { "id": "w4", "from": "panel_neutral", "to": "light_load", "color": "white", "gaugeAwg": 12 },
+      { "id": "w5", "from": "panel_neutral", "to": "receptacle", "color": "white", "gaugeAwg": 12 },
+      { "id": "w6", "from": "breaker_20a", "to": "receptacle", "color": "black", "gaugeAwg": 12 },
+      { "id": "w7", "from": "panel_ground", "to": "light_load", "color": "green", "gaugeAwg": 12 },
+      { "id": "w8", "from": "panel_ground", "to": "receptacle", "color": "green", "gaugeAwg": 12 }
+    ]
+  },
+  "controls": {
+    "toggles": [
+      { "id": "breaker_state", "label": "Main Branch Breaker", "default": true },
+      { "id": "switch_state", "label": "Wall Switch", "default": false },
+      { "id": "ground_fault", "label": "Inject Ground Fault", "default": false }
+    ],
+    "sliders": [
+      { "id": "line_voltage", "label": "Line Voltage (V)", "min": 110, "max": 125, "step": 1, "default": 120 },
+      { "id": "lamp_watts", "label": "Lamp Power (W)", "min": 20, "max": 120, "step": 5, "default": 60 }
+    ]
+  },
+  "circuitBuilderBasics": {
+    "allowedParts": ["source", "breaker", "switch", "wire", "light", "receptacle", "ground"],
+    "snapRules": ["hot-to-protection-first", "neutral-never-through-switch", "ground-required-on-all-loads"]
+  },
+  "tasks": [
+    {
+      "id": "label-conductors",
+      "type": "labeling",
+      "prompt": "Label each conductor as hot, neutral, or ground.",
+      "targets": ["w1", "w4", "w7"]
+    },
+    {
+      "id": "build-correct-path",
+      "type": "builder",
+      "prompt": "Connect breaker -> switch -> light in the correct sequence.",
+      "expectedOrder": ["breaker_20a", "switch_spst", "light_load"]
+    },
+    {
+      "id": "safety-check",
+      "type": "toggle",
+      "prompt": "Turn ON breaker and switch, then identify if energized state is correct.",
+      "dependsOn": ["breaker_state", "switch_state"]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "interactive5",
+  "title": "Fault Finding Wiring Challenge",
+  "theme": "troubleshooting",
+  "description": "Diagnose open neutral, reversed polarity, and intermittent breaker trip conditions.",
+  "diagram": {
+    "canvas": "split-view",
+    "nodes": [
+      { "id": "service_source", "label": "Service Source", "x": 10, "y": 42, "type": "source" },
+      { "id": "breaker", "label": "15A Breaker", "x": 25, "y": 42, "type": "protection" },
+      { "id": "junction_box", "label": "Junction Box", "x": 46, "y": 42, "type": "junction" },
+      { "id": "switch", "label": "Single-Pole Switch", "x": 64, "y": 42, "type": "switch" },
+      { "id": "lamp", "label": "Task Lamp", "x": 82, "y": 42, "type": "load" },
+      { "id": "receptacle", "label": "Test Receptacle", "x": 82, "y": 72, "type": "load" },
+      { "id": "neutral_return", "label": "Neutral Return", "x": 12, "y": 72, "type": "source" }
+    ],
+    "wires": [
+      { "id": "f1", "from": "service_source", "to": "breaker", "color": "black", "gaugeAwg": 14 },
+      { "id": "f2", "from": "breaker", "to": "junction_box", "color": "black", "gaugeAwg": 14 },
+      { "id": "f3", "from": "junction_box", "to": "switch", "color": "black", "gaugeAwg": 14 },
+      { "id": "f4", "from": "switch", "to": "lamp", "color": "black", "gaugeAwg": 14 },
+      { "id": "f5", "from": "neutral_return", "to": "lamp", "color": "white", "gaugeAwg": 14 },
+      { "id": "f6", "from": "junction_box", "to": "receptacle", "color": "black", "gaugeAwg": 14 },
+      { "id": "f7", "from": "neutral_return", "to": "receptacle", "color": "white", "gaugeAwg": 14 }
+    ]
+  },
+  "controls": {
+    "toggles": [
+      { "id": "breaker_on", "label": "Breaker ON", "default": true },
+      { "id": "switch_on", "label": "Switch ON", "default": false },
+      { "id": "fault_open_neutral", "label": "Inject Open Neutral", "default": false },
+      { "id": "fault_reverse_polarity", "label": "Inject Reverse Polarity", "default": false }
+    ],
+    "sliders": [
+      { "id": "load_intensity", "label": "Load Intensity (%)", "min": 10, "max": 120, "step": 5, "default": 55 },
+      { "id": "contact_resistance", "label": "Loose Connection (Ω)", "min": 0, "max": 25, "step": 1, "default": 2 }
+    ]
+  },
+  "circuitBuilderBasics": {
+    "diagnosticTools": ["multimeter", "non-contact tester", "receptacle tester"],
+    "coreChecks": ["voltage-line-to-neutral", "continuity-neutral", "hot-neutral-polarity"]
+  },
+  "tasks": [
+    {
+      "id": "label-fault-points",
+      "type": "labeling",
+      "prompt": "Label the most likely fault point for each symptom card.",
+      "targets": ["junction_box", "receptacle", "switch"]
+    },
+    {
+      "id": "fault-repair-build",
+      "type": "builder",
+      "prompt": "Reconnect the neutral and restore correct polarity wiring path.",
+      "successMetric": "lamp_and_receptacle_nominal"
+    },
+    {
+      "id": "verification-sequence",
+      "type": "toggle",
+      "prompt": "Clear all injected faults and verify safe energized operation.",
+      "dependsOn": ["breaker_on", "switch_on", "fault_open_neutral", "fault_reverse_polarity"]
+    }
+  ]
+}

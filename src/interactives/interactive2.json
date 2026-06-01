@@ -1,0 +1,61 @@
+{
+  "id": "interactive2",
+  "title": "Series and Parallel Circuit Builder Basics",
+  "theme": "circuit-builder",
+  "description": "Practice arranging resistors in series and parallel and observe total resistance changes.",
+  "diagram": {
+    "canvas": "breadboard-style",
+    "nodes": [
+      { "id": "source_pos", "label": "DC Source +", "x": 10, "y": 50, "type": "source" },
+      { "id": "source_neg", "label": "DC Source -", "x": 10, "y": 75, "type": "source" },
+      { "id": "rail_top", "label": "Positive Rail", "x": 30, "y": 50, "type": "rail" },
+      { "id": "rail_bottom", "label": "Negative Rail", "x": 30, "y": 75, "type": "rail" },
+      { "id": "load_bank", "label": "Resistor Bank", "x": 72, "y": 62, "type": "load" }
+    ],
+    "wires": [
+      { "id": "wb1", "from": "source_pos", "to": "rail_top", "color": "red", "gaugeAwg": 16 },
+      { "id": "wb2", "from": "source_neg", "to": "rail_bottom", "color": "black", "gaugeAwg": 16 }
+    ]
+  },
+  "controls": {
+    "toggles": [
+      { "id": "mode_series", "label": "Series Mode", "default": true },
+      { "id": "mode_parallel", "label": "Parallel Branch Mode", "default": false },
+      { "id": "show_current_arrows", "label": "Show Current Flow", "default": true }
+    ],
+    "sliders": [
+      { "id": "supply_voltage", "label": "Supply Voltage (V)", "min": 5, "max": 24, "step": 1, "default": 12 },
+      { "id": "resistor_r1", "label": "R1 (Ω)", "min": 10, "max": 100, "step": 5, "default": 40 },
+      { "id": "resistor_r2", "label": "R2 (Ω)", "min": 10, "max": 100, "step": 5, "default": 60 },
+      { "id": "resistor_r3", "label": "R3 (Ω)", "min": 10, "max": 100, "step": 5, "default": 80 }
+    ]
+  },
+  "circuitBuilderBasics": {
+    "starterKit": ["wire", "resistor", "ammeter", "voltmeter", "switch"],
+    "rules": [
+      "complete-loop-required",
+      "parallel-branches-share-source-voltage",
+      "series-current-same-through-all-elements"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "label-rules",
+      "type": "labeling",
+      "prompt": "Label the diagram regions as source, branch, and return path.",
+      "targets": ["source_pos", "rail_top", "rail_bottom"]
+    },
+    {
+      "id": "build-series",
+      "type": "builder",
+      "prompt": "Place R1, R2, and R3 in a single series path.",
+      "expectedOrder": ["source_pos", "resistor_r1", "resistor_r2", "resistor_r3", "source_neg"]
+    },
+    {
+      "id": "build-parallel",
+      "type": "builder",
+      "prompt": "Toggle parallel mode and create two parallel branches.",
+      "dependsOn": ["mode_parallel"]
+    }
+  ]
+}

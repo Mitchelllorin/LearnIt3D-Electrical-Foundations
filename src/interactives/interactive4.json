@@ -1,0 +1,63 @@
+{
+  "id": "interactive4",
+  "title": "Breaker Panel Load and Label Simulator",
+  "theme": "panel-management",
+  "description": "Balance branch loads, toggle breakers, and assign proper circuit labels.",
+  "diagram": {
+    "canvas": "front-panel",
+    "nodes": [
+      { "id": "main_breaker", "label": "Main 200A", "x": 50, "y": 12, "type": "protection" },
+      { "id": "ckt_kitchen", "label": "Kitchen Circuit", "x": 35, "y": 32, "type": "branch" },
+      { "id": "ckt_bath", "label": "Bathroom Circuit", "x": 65, "y": 32, "type": "branch" },
+      { "id": "ckt_living", "label": "Living Room Circuit", "x": 35, "y": 52, "type": "branch" },
+      { "id": "ckt_bed", "label": "Bedroom Circuit", "x": 65, "y": 52, "type": "branch" },
+      { "id": "load_bus_a", "label": "Bus A", "x": 22, "y": 72, "type": "bus" },
+      { "id": "load_bus_b", "label": "Bus B", "x": 78, "y": 72, "type": "bus" }
+    ],
+    "wires": [
+      { "id": "pb1", "from": "main_breaker", "to": "ckt_kitchen", "color": "red", "gaugeAwg": 12 },
+      { "id": "pb2", "from": "main_breaker", "to": "ckt_bath", "color": "red", "gaugeAwg": 12 },
+      { "id": "pb3", "from": "main_breaker", "to": "ckt_living", "color": "black", "gaugeAwg": 14 },
+      { "id": "pb4", "from": "main_breaker", "to": "ckt_bed", "color": "black", "gaugeAwg": 14 }
+    ]
+  },
+  "controls": {
+    "toggles": [
+      { "id": "main_on", "label": "Main Breaker", "default": true },
+      { "id": "kitchen_on", "label": "Kitchen Breaker", "default": true },
+      { "id": "bath_on", "label": "Bathroom Breaker", "default": true },
+      { "id": "living_on", "label": "Living Room Breaker", "default": true },
+      { "id": "bed_on", "label": "Bedroom Breaker", "default": true }
+    ],
+    "sliders": [
+      { "id": "kitchen_load", "label": "Kitchen Load (%)", "min": 0, "max": 130, "step": 5, "default": 60 },
+      { "id": "bath_load", "label": "Bathroom Load (%)", "min": 0, "max": 130, "step": 5, "default": 45 },
+      { "id": "living_load", "label": "Living Room Load (%)", "min": 0, "max": 130, "step": 5, "default": 40 },
+      { "id": "bed_load", "label": "Bedroom Load (%)", "min": 0, "max": 130, "step": 5, "default": 35 }
+    ]
+  },
+  "circuitBuilderBasics": {
+    "learningFocus": ["breaker-rating", "load-diversity", "branch-identification", "overload-response"],
+    "autoTripThresholdPercent": 100
+  },
+  "tasks": [
+    {
+      "id": "label-circuits",
+      "type": "labeling",
+      "prompt": "Apply correct labels to each branch breaker slot.",
+      "targets": ["ckt_kitchen", "ckt_bath", "ckt_living", "ckt_bed"]
+    },
+    {
+      "id": "prevent-overload",
+      "type": "slider",
+      "prompt": "Adjust branch load sliders so no branch exceeds 100%.",
+      "successMetric": "all_branch_loads_below_trip"
+    },
+    {
+      "id": "service-disconnect",
+      "type": "toggle",
+      "prompt": "Use toggles to perform a safe full-panel shutdown sequence.",
+      "expectedOrder": ["kitchen_on", "bath_on", "living_on", "bed_on", "main_on"]
+    }
+  ]
+}
