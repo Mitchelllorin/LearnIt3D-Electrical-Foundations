@@ -10,7 +10,7 @@ echo "Preparing macOS installer package for ${APP_NAME}..."
 mkdir -p "${OUTPUT_DIR}"
 
 if [[ ! -d "${SOURCE_DIR}" ]]; then
-  echo "Desktop build output not found at ${SOURCE_DIR}. Run package:dir first." >&2
+  echo "Desktop build output not found at ${SOURCE_DIR}. Run npm run package:dir first." >&2
   exit 1
 fi
 
