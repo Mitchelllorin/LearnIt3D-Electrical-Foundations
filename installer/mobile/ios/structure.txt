@@ -1,0 +1,10 @@
+installer/mobile/ios/
+├── App/
+│   ├── App.xcodeproj/
+│   ├── App.xcworkspace/
+│   └── App/
+│       ├── AppDelegate.swift
+│       ├── Info.plist
+│       └── Assets.xcassets/
+├── Podfile
+└── Podfile.lock

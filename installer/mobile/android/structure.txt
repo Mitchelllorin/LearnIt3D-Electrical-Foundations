@@ -1,0 +1,11 @@
+installer/mobile/android/
+├── app/
+│   ├── build.gradle
+│   └── src/main/
+│       ├── AndroidManifest.xml
+│       ├── java/
+│       └── res/
+├── build.gradle
+├── gradle.properties
+├── settings.gradle
+└── gradlew
