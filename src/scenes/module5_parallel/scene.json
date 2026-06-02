@@ -1,0 +1,55 @@
+{
+  "id": "module5_tools",
+  "moduleNumber": 5,
+  "title": "Electrical Tools and Meter Skills Trainer",
+  "sceneType": "tool_lab",
+  "sourceModules": [6],
+  "libraryReference": "Meter Skills Trainer",
+  "summary": "Learners work through realistic measuring tasks using hand tools, multimeters, clamp meters, and continuity testers while following correct mode and lead placement rules.",
+  "learningObjectives": [
+    "Select the correct tool for common electrical tasks.",
+    "Use meter modes safely for voltage, resistance, continuity, and current checks.",
+    "Recognize common measurement mistakes before they become hazards."
+  ],
+  "environment": {
+    "setting": "Service bench with locked tool drawers, energized and de-energized test boards, and digital instrument rack",
+    "focus": "Safe tool selection and disciplined measurement habits"
+  },
+  "interactables": [
+    {
+      "id": "multimeter",
+      "label": "Digital multimeter",
+      "type": "meter",
+      "teaches": "Covers lead placement, rotary mode selection, and safe measurement sequence."
+    },
+    {
+      "id": "clamp_meter",
+      "label": "Clamp meter",
+      "type": "meter",
+      "teaches": "Shows non-contact current measurement on a single conductor."
+    },
+    {
+      "id": "continuity_tester",
+      "label": "Continuity tester",
+      "type": "tester",
+      "teaches": "Reinforces that continuity tests belong on de-energized circuits only."
+    },
+    {
+      "id": "hand_tool_wall",
+      "label": "Insulated tool rack",
+      "type": "selector",
+      "teaches": "Compares cutters, drivers, strippers, and torque tools for the job at hand."
+    }
+  ],
+  "tasks": [
+    "Choose the correct tool for stripping, tightening, measuring, and verifying tasks.",
+    "Set the multimeter to the correct mode before probing the circuit.",
+    "Use the clamp meter on a single conductor and read the current value.",
+    "Identify and correct an unsafe meter setup before taking a reading."
+  ],
+  "completion": [
+    "Learner selects the correct tool in every scenario.",
+    "Learner demonstrates proper meter setup and probe sequence.",
+    "Learner avoids unsafe testing choices."
+  ]
+}
