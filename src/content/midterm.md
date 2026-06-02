@@ -1,3 +1,4 @@
+<Scene src="/scenes/midterm_exam/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Midterm Exam (Modules 1–6)
