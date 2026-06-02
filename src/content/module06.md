@@ -1,3 +1,4 @@
+<Scene src="/scenes/module6_voltage/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 6 — Tools, Meters & Measurement
