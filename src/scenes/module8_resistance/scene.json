@@ -1,0 +1,55 @@
+{
+  "id": "module8_panels",
+  "moduleNumber": 8,
+  "title": "Panelboard and Breaker Trainer",
+  "sceneType": "panel_sim",
+  "sourceModules": [10],
+  "libraryReference": "Panelboard and Breaker Trainer",
+  "summary": "A service-panel simulator lets learners inspect busbars, breaker positions, neutral and bonding bars, and common protective devices while tracing how branch circuits are fed and protected.",
+  "learningObjectives": [
+    "Identify the major internal parts of a panelboard.",
+    "Match breaker ratings and protection types to common branch-circuit applications.",
+    "Understand how overcurrent and fault protection isolate unsafe conditions."
+  ],
+  "environment": {
+    "setting": "Open panelboard with removable dead front, labeled branch circuits, and diagnostic status lights",
+    "focus": "Protection paths and panel organization"
+  },
+  "interactables": [
+    {
+      "id": "main_disconnect",
+      "label": "Main disconnect",
+      "type": "control",
+      "teaches": "Shows how the service panel is isolated before internal work begins."
+    },
+    {
+      "id": "breaker_bank",
+      "label": "Branch breakers",
+      "type": "selector",
+      "teaches": "Compares standard, GFCI, and AFCI breaker behavior."
+    },
+    {
+      "id": "busbar_view",
+      "label": "Busbar cutaway",
+      "type": "cutaway",
+      "teaches": "Explains how power is distributed across panel spaces."
+    },
+    {
+      "id": "fault_trip_demo",
+      "label": "Trip and reset scenario",
+      "type": "simulation",
+      "teaches": "Shows overload and fault response plus safe reset practice."
+    }
+  ],
+  "tasks": [
+    "Identify the main disconnect, busbars, neutral bar, and bonding point.",
+    "Assign a correct breaker type to each branch-circuit scenario.",
+    "Trigger an overload and explain why the selected breaker trips.",
+    "Reset the panel in a safe sequence after the fault is cleared."
+  ],
+  "completion": [
+    "Learner identifies core panel components accurately.",
+    "Learner selects proper protection for each circuit.",
+    "Learner completes the trip-and-reset sequence safely."
+  ]
+}
