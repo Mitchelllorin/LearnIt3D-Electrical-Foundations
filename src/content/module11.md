@@ -1,3 +1,4 @@
+<Scene src="/scenes/module11_troubleshooting/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 11 — Motors, Loads & Applications
