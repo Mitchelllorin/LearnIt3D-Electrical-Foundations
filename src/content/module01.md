@@ -1,3 +1,4 @@
+<Scene src="/scenes/module1_intro/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 1 — Introduction to Electricity & Safety
