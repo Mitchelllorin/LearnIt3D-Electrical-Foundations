@@ -1,0 +1,55 @@
+{
+  "id": "module11_blueprints",
+  "moduleNumber": 11,
+  "title": "Blueprint and Schematic Interpreter",
+  "sceneType": "plan_reader",
+  "sourceModules": [9, 10, 12],
+  "libraryReference": null,
+  "summary": "Learners move between plan view, one-line view, symbol legend, and room-level 3D overlays to connect drawings with real installation locations and circuit intent.",
+  "learningObjectives": [
+    "Read common electrical symbols, legends, and panel references.",
+    "Trace branch circuits from plan view into physical room locations.",
+    "Use schedules and notes to plan installation or troubleshooting work."
+  ],
+  "environment": {
+    "setting": "Digital drafting table with house plan, panel schedule, symbol legend, and 3D room overlay",
+    "focus": "Turning drawings into installable field work"
+  },
+  "interactables": [
+    {
+      "id": "symbol_legend",
+      "label": "Electrical symbol legend",
+      "type": "reference",
+      "teaches": "Defines receptacle, switch, luminaire, homerun, and panel symbols."
+    },
+    {
+      "id": "plan_overlay",
+      "label": "Room-by-room circuit overlay",
+      "type": "mapping",
+      "teaches": "Links drawing symbols to physical device locations in the 3D model."
+    },
+    {
+      "id": "panel_schedule",
+      "label": "Panel and circuit schedule",
+      "type": "schedule",
+      "teaches": "Connects drawing callouts to breaker numbers and load assignments."
+    },
+    {
+      "id": "trace_tool",
+      "label": "Circuit trace mode",
+      "type": "analyzer",
+      "teaches": "Lets the learner follow a branch circuit from the panel to the final device."
+    }
+  ],
+  "tasks": [
+    "Match symbols on the plan to their correct field devices.",
+    "Trace a selected homerun back to the correct panel and breaker.",
+    "Identify which room devices share the same branch circuit.",
+    "Use the schedule and notes to prepare a simple installation sequence."
+  ],
+  "completion": [
+    "Learner reads symbols and schedules accurately.",
+    "Learner traces circuits from plan to panel without errors.",
+    "Learner explains how the drawings guide installation work."
+  ]
+}
