@@ -1,0 +1,55 @@
+{
+  "id": "module10_troubleshooting",
+  "moduleNumber": 10,
+  "title": "Fault-Finding Diagnostic Arena",
+  "sceneType": "diagnostic_sim",
+  "sourceModules": [12],
+  "libraryReference": "Fault-Finding Diagnostic Scenario Pack",
+  "summary": "This troubleshooting trainer injects realistic faults into a branch circuit and asks the learner to test safely, isolate the issue, identify the root cause, and verify the repair.",
+  "learningObjectives": [
+    "Follow a structured symptom-to-repair troubleshooting sequence.",
+    "Distinguish between open circuits, short circuits, ground faults, overloads, and loose connections.",
+    "Use safe meter-based evidence instead of guessing."
+  ],
+  "environment": {
+    "setting": "Training board with panel, switches, receptacles, loads, and fault injection controller",
+    "focus": "Evidence-based troubleshooting with safe testing habits"
+  },
+  "interactables": [
+    {
+      "id": "fault_injector",
+      "label": "Scenario selector",
+      "type": "controller",
+      "teaches": "Loads hidden faults and symptom descriptions."
+    },
+    {
+      "id": "probe_points",
+      "label": "Test nodes",
+      "type": "measurement",
+      "teaches": "Encourages voltage comparison across logical points in the circuit."
+    },
+    {
+      "id": "multimeter_tool",
+      "label": "Virtual multimeter",
+      "type": "meter",
+      "teaches": "Supports voltage, continuity, and resistance tests with safe restrictions."
+    },
+    {
+      "id": "repair_action",
+      "label": "Repair confirmation panel",
+      "type": "workflow",
+      "teaches": "Requires the learner to apply the correct fix before re-energizing."
+    }
+  ],
+  "tasks": [
+    "Verify the reported symptom before opening the circuit.",
+    "Probe the correct test points to narrow the likely fault.",
+    "Submit the correct diagnosis from the available fault types.",
+    "Complete the repair and confirm normal operation after re-energizing."
+  ],
+  "completion": [
+    "Learner uses a logical and safe testing sequence.",
+    "Learner diagnoses the injected fault correctly.",
+    "Learner verifies the repair instead of stopping at partial success."
+  ]
+}
