@@ -1,0 +1,55 @@
+{
+  "id": "module6_safety",
+  "moduleNumber": 6,
+  "title": "Safety Boundary and LOTO Walkthrough",
+  "sceneType": "safety_sim",
+  "sourceModules": [1],
+  "libraryReference": "PPE and Safety Boundary Walkthrough",
+  "summary": "This scene places the learner in an energized work area where PPE selection, approach boundaries, lockout/tagout, and test-before-touch decisions determine whether the task can proceed safely.",
+  "learningObjectives": [
+    "Identify shock, arc flash, blast, and fire hazards in a work area.",
+    "Apply PPE and boundary rules before approaching energized equipment.",
+    "Follow a correct apprentice-level lockout/tagout verification sequence."
+  ],
+  "environment": {
+    "setting": "Mechanical and electrical room with panelboard, hazard zones, and worker staging area",
+    "focus": "Safe approach behavior before hands-on electrical work"
+  },
+  "interactables": [
+    {
+      "id": "ppe_station",
+      "label": "PPE rack",
+      "type": "selector",
+      "teaches": "Matches gloves, hard hat, face shield, and footwear to the task risk."
+    },
+    {
+      "id": "boundary_markers",
+      "label": "Safety zone rings",
+      "type": "hazard_overlay",
+      "teaches": "Shows green, yellow, and red approach zones around energized equipment."
+    },
+    {
+      "id": "disconnect_handle",
+      "label": "Disconnect and lockout point",
+      "type": "procedure",
+      "teaches": "Walks the learner through isolate, lock, tag, release stored energy, and verify."
+    },
+    {
+      "id": "known_live_station",
+      "label": "Test-before-touch proving point",
+      "type": "verification",
+      "teaches": "Reinforces live-dead-live meter verification."
+    }
+  ],
+  "tasks": [
+    "Dress the worker with task-appropriate PPE.",
+    "Stay outside the wrong boundary and explain why it is unsafe to continue.",
+    "Complete the LOTO sequence in the correct order.",
+    "Prove absence of voltage using the live-dead-live method."
+  ],
+  "completion": [
+    "Learner chooses correct PPE and boundary controls.",
+    "Learner completes LOTO without skipped steps.",
+    "Learner verifies zero-energy state before work begins."
+  ]
+}
