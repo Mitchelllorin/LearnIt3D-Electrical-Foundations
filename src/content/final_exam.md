@@ -1,3 +1,4 @@
+<Scene src="/scenes/final_exam/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Final Exam (Modules 1–12)
