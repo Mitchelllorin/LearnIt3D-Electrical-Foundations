@@ -1,3 +1,4 @@
+<Scene src="/scenes/module5_parallel/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 5 — Conductors, Insulators & Materials
