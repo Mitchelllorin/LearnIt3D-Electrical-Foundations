@@ -1,0 +1,55 @@
+{
+  "id": "module1_basics",
+  "moduleNumber": 1,
+  "title": "Electrical Basics Explorer",
+  "sceneType": "interactive_lab",
+  "sourceModules": [1],
+  "libraryReference": "Electron Flow Visualizer",
+  "summary": "Learners explore charge movement, complete circuits, and the difference between electron flow and conventional current inside a simple bench-top 3D training space.",
+  "learningObjectives": [
+    "Identify the source, conductor, load, and return path in a complete circuit.",
+    "Compare electron flow and conventional current without changing circuit behavior.",
+    "Recognize how open and closed paths affect current movement."
+  ],
+  "environment": {
+    "setting": "Foundations training lab with battery bench, lamp circuit, and material sample wall",
+    "focus": "Core electrical concepts before calculations or field installation"
+  },
+  "interactables": [
+    {
+      "id": "power_source",
+      "label": "Battery and switch",
+      "type": "control",
+      "teaches": "Shows how voltage creates a potential difference that drives charge through a closed path."
+    },
+    {
+      "id": "current_overlay",
+      "label": "Flow direction toggle",
+      "type": "visualizer",
+      "teaches": "Switches between electron flow and conventional current arrows using the same circuit."
+    },
+    {
+      "id": "material_board",
+      "label": "Conductor and insulator samples",
+      "type": "comparison",
+      "teaches": "Highlights why copper carries current while plastic insulation does not."
+    },
+    {
+      "id": "fault_break",
+      "label": "Open circuit break point",
+      "type": "diagnostic",
+      "teaches": "Demonstrates why the lamp turns off when the circuit path is interrupted."
+    }
+  ],
+  "tasks": [
+    "Close the switch and confirm the lamp energizes.",
+    "Toggle the flow overlay and explain why both current models describe the same circuit action.",
+    "Select two materials and sort them into conductor or insulator categories.",
+    "Open the circuit and identify which path element stopped current."
+  ],
+  "completion": [
+    "Learner correctly identifies every circuit part.",
+    "Learner explains both flow conventions.",
+    "Learner restores the circuit to a working state."
+  ]
+}
