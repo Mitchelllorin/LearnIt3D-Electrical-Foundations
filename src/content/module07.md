@@ -1,3 +1,4 @@
+<Scene src="/scenes/module7_current/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 7 — AC vs DC Fundamentals
