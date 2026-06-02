@@ -1,0 +1,55 @@
+{
+  "id": "module4_ac",
+  "moduleNumber": 4,
+  "title": "AC Waveform Viewer",
+  "sceneType": "waveform_sim",
+  "sourceModules": [7],
+  "libraryReference": "AC Waveform Viewer",
+  "summary": "A waveform theater lets learners compare AC and DC, adjust frequency and amplitude, and connect RMS values to real-world power distribution behavior.",
+  "learningObjectives": [
+    "Differentiate AC from DC using waveform shape and polarity change.",
+    "Relate frequency, period, peak value, and RMS value.",
+    "Recognize where AC fundamentals matter in residential and commercial systems."
+  ],
+  "environment": {
+    "setting": "Darkened instrumentation bay with oscilloscope wall, waveform projector, and phase controls",
+    "focus": "Seeing alternating behavior rather than only calculating it"
+  },
+  "interactables": [
+    {
+      "id": "wave_selector",
+      "label": "AC/DC mode selector",
+      "type": "toggle",
+      "teaches": "Shows constant polarity for DC and alternating polarity for AC."
+    },
+    {
+      "id": "frequency_knob",
+      "label": "Frequency control",
+      "type": "dial",
+      "teaches": "Changes cycles per second and updates period in real time."
+    },
+    {
+      "id": "amplitude_knob",
+      "label": "Peak voltage control",
+      "type": "dial",
+      "teaches": "Demonstrates the difference between peak and RMS values."
+    },
+    {
+      "id": "phase_compare",
+      "label": "Single-phase and three-phase overlay",
+      "type": "visualizer",
+      "teaches": "Introduces phase relationships used in power systems."
+    }
+  ],
+  "tasks": [
+    "Switch between AC and DC and describe what changes on the waveform display.",
+    "Adjust frequency to meet a target period value.",
+    "Match a target RMS voltage by changing peak amplitude.",
+    "Compare single-phase and three-phase traces and identify phase spacing."
+  ],
+  "completion": [
+    "Learner identifies frequency, period, peak, and RMS correctly.",
+    "Learner explains the practical difference between AC and DC.",
+    "Learner completes the waveform matching challenge."
+  ]
+}
