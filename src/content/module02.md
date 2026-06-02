@@ -1,3 +1,4 @@
+<Scene src="/scenes/module2_tools/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 2 — Voltage, Current, Resistance (Ohm’s Law)
