@@ -1,3 +1,4 @@
+<Scene src="/scenes/module10_safety/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 10 — Breakers, Panels & Protection
