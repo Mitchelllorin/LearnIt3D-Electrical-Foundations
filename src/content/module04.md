@@ -1,3 +1,4 @@
+<Scene src="/scenes/module4_series/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 4 — Electrical Power & Energy
