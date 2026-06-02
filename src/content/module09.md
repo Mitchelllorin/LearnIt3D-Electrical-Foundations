@@ -1,3 +1,4 @@
+<Scene src="/scenes/module9_power/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 9 — Residential Wiring Basics
