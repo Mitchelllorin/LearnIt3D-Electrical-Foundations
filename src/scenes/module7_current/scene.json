@@ -1,0 +1,55 @@
+{
+  "id": "module7_wiring",
+  "moduleNumber": 7,
+  "title": "Residential Wiring Rough-In Simulator",
+  "sceneType": "rough_in_sim",
+  "sourceModules": [9],
+  "libraryReference": "Residential Wiring Rough-In Simulator",
+  "summary": "Learners route branch-circuit wiring through a residential mock-up, placing boxes, switches, receptacles, and lighting outlets while keeping conductor identification and bonding rules in view.",
+  "learningObjectives": [
+    "Recognize common residential branch-circuit devices and cable paths.",
+    "Place receptacles, switches, and lighting outlets in a realistic rough-in layout.",
+    "Apply grounding and bonding concepts to a basic dwelling installation."
+  ],
+  "environment": {
+    "setting": "Open-framed house model with rooms, stud bays, boxes, cable reels, and branch circuits",
+    "focus": "Basic layout interpretation and installation planning"
+  },
+  "interactables": [
+    {
+      "id": "device_boxes",
+      "label": "Box placement kit",
+      "type": "placement",
+      "teaches": "Shows where switches, receptacles, and fixture boxes belong in the plan."
+    },
+    {
+      "id": "cable_routes",
+      "label": "Cable routing overlay",
+      "type": "pathing",
+      "teaches": "Demonstrates practical paths for branch-circuit cable runs."
+    },
+    {
+      "id": "conductor_colors",
+      "label": "Conductor ID legend",
+      "type": "reference",
+      "teaches": "Reinforces hot, neutral, and bonding conductor identification."
+    },
+    {
+      "id": "load_tester",
+      "label": "Room energize check",
+      "type": "verification",
+      "teaches": "Confirms whether the placed wiring supports the intended device operation."
+    }
+  ],
+  "tasks": [
+    "Place boxes for a bedroom lighting and receptacle circuit.",
+    "Route cable from the panel to each device without missing a required connection.",
+    "Assign hot, neutral, and bonding conductors correctly.",
+    "Energize the mock-up and verify switch-controlled lighting behavior."
+  ],
+  "completion": [
+    "Learner completes a functional branch-circuit rough-in.",
+    "Learner identifies conductor roles correctly.",
+    "Learner verifies device operation at the end of the installation."
+  ]
+}
