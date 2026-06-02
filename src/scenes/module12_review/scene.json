@@ -1,0 +1,55 @@
+{
+  "id": "module12_final",
+  "moduleNumber": 12,
+  "title": "Electrical Foundations Capstone",
+  "sceneType": "capstone_assessment",
+  "sourceModules": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  "libraryReference": null,
+  "summary": "The final scene combines safety, math, wiring, panels, conduit, blueprint reading, AC/DC reasoning, and troubleshooting into one integrated apprentice-level mission.",
+  "learningObjectives": [
+    "Apply foundational electrical theory across an entire job scenario.",
+    "Make safe decisions before, during, and after installation and diagnosis work.",
+    "Demonstrate readiness to connect drawings, calculations, measurements, and corrective action."
+  ],
+  "environment": {
+    "setting": "Full-jobsite simulation with plan table, service panel, rough-in area, conduit path, energized loads, and diagnostic fault station",
+    "focus": "Integrated performance rather than isolated topic practice"
+  },
+  "interactables": [
+    {
+      "id": "job_brief",
+      "label": "Scope and drawing package",
+      "type": "mission_start",
+      "teaches": "Defines the installation and service objectives the learner must complete."
+    },
+    {
+      "id": "safety_gate",
+      "label": "PPE and LOTO checkpoint",
+      "type": "safety_check",
+      "teaches": "Blocks progress until safe preparation is complete."
+    },
+    {
+      "id": "installation_zone",
+      "label": "Wiring, conduit, and panel work area",
+      "type": "build_zone",
+      "teaches": "Requires correct layout, routing, device placement, and protection choices."
+    },
+    {
+      "id": "commissioning_zone",
+      "label": "Test and troubleshoot station",
+      "type": "verification_zone",
+      "teaches": "Requires meter-based verification, fault diagnosis, and final documentation."
+    }
+  ],
+  "tasks": [
+    "Read the drawing package and prepare the work plan.",
+    "Complete the required safety setup before touching equipment.",
+    "Install the assigned wiring and conduit path, then terminate the panel correctly.",
+    "Energize, test, diagnose one injected fault, repair it, and document the completed job."
+  ],
+  "completion": [
+    "Learner completes the project with no critical safety violations.",
+    "Learner produces a functioning installation with correct protection and labeling.",
+    "Learner verifies performance and closes the capstone with accurate documentation."
+  ]
+}
