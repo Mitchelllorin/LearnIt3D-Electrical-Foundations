@@ -1,0 +1,55 @@
+{
+  "id": "module3_dc",
+  "moduleNumber": 3,
+  "title": "DC Circuit Builder",
+  "sceneType": "circuit_builder",
+  "sourceModules": [3, 4],
+  "libraryReference": "Series Circuit Builder; Parallel Circuit Builder",
+  "summary": "Learners assemble battery-fed DC circuits, compare series and parallel behavior, and observe how voltage, current, and power change as loads are added or removed.",
+  "learningObjectives": [
+    "Compare voltage and current behavior in series and parallel DC circuits.",
+    "Calculate equivalent resistance for simple branch arrangements.",
+    "Connect circuit layout decisions to load performance and power use."
+  ],
+  "environment": {
+    "setting": "Workbench with battery bank, resistive loads, lamps, and branch wiring rails",
+    "focus": "Hands-on DC reasoning with immediate circuit feedback"
+  },
+  "interactables": [
+    {
+      "id": "battery_bank",
+      "label": "DC source pack",
+      "type": "power_source",
+      "teaches": "Provides a stable source for comparing circuit arrangements."
+    },
+    {
+      "id": "series_track",
+      "label": "Series wiring rail",
+      "type": "builder",
+      "teaches": "Shows one current path with voltage drop across multiple loads."
+    },
+    {
+      "id": "parallel_track",
+      "label": "Parallel wiring rail",
+      "type": "builder",
+      "teaches": "Shows equal branch voltage with divided current paths."
+    },
+    {
+      "id": "power_meter",
+      "label": "Watts and amps display",
+      "type": "meter",
+      "teaches": "Links resistance changes to total current draw and power."
+    }
+  ],
+  "tasks": [
+    "Build a working series circuit with two lamps and record the voltage drop across each load.",
+    "Rebuild the circuit in parallel and compare branch current behavior.",
+    "Increase branch count until the source current target is reached.",
+    "Explain which layout is better for independent load operation and why."
+  ],
+  "completion": [
+    "Learner builds both series and parallel circuits correctly.",
+    "Learner identifies the correct equivalent resistance trend.",
+    "Learner explains the DC behavior of each layout."
+  ]
+}
