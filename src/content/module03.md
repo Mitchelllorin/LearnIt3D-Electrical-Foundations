@@ -1,3 +1,4 @@
+<Scene src="/scenes/module3_ohmslaw/scene.json" />
 LearnIt3D — Electrical Foundations Apprentice Prep
 Learn IT3D — STEM · SIMULATED · 3D
 Module 3 — Series & Parallel Circuits
