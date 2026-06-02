@@ -1,0 +1,55 @@
+{
+  "id": "module9_conduit",
+  "moduleNumber": 9,
+  "title": "Conduit Routing and Bend Lab",
+  "sceneType": "installation_lab",
+  "sourceModules": [5, 9],
+  "libraryReference": null,
+  "summary": "Learners practice selecting conduit type, laying out runs, placing supports, and making common bends while keeping fill, protection, and installation discipline in view.",
+  "learningObjectives": [
+    "Recognize common conduit systems such as EMT, PVC, and flexible raceway.",
+    "Plan simple runs using couplings, connectors, offsets, and 90-degree bends.",
+    "Connect raceway choices to conductor protection and installation quality."
+  ],
+  "environment": {
+    "setting": "Shop-style conduit bay with wall runs, obstacle posts, bending station, and material rack",
+    "focus": "Foundational raceway planning for apprentice installations"
+  },
+  "interactables": [
+    {
+      "id": "material_selector",
+      "label": "Conduit type rack",
+      "type": "selector",
+      "teaches": "Compares EMT, PVC, and flexible raceway based on application and environment."
+    },
+    {
+      "id": "bend_station",
+      "label": "Hand bender station",
+      "type": "tool",
+      "teaches": "Introduces stub-up, offset, and 90-degree bend intent."
+    },
+    {
+      "id": "run_planner",
+      "label": "Route layout guide",
+      "type": "planner",
+      "teaches": "Shows how to avoid obstacles and maintain clean routing."
+    },
+    {
+      "id": "support_markers",
+      "label": "Support placement overlay",
+      "type": "inspection",
+      "teaches": "Highlights where the run still needs secure support and finishing hardware."
+    }
+  ],
+  "tasks": [
+    "Choose the conduit type that best fits each environment shown.",
+    "Lay out a wall run around an obstruction using an offset.",
+    "Place connectors, couplings, and supports in the correct order.",
+    "Inspect the finished run for clean alignment and missing hardware."
+  ],
+  "completion": [
+    "Learner selects suitable raceway for the scenario.",
+    "Learner completes a clean routed conduit path.",
+    "Learner passes the final installation inspection check."
+  ]
+}
