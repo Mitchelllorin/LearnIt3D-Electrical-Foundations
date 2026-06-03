@@ -42,6 +42,11 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     needs: verify-web
+    env:
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,19 +70,19 @@ jobs:
         run: npm run sync:android
 
       - name: Restore Android upload keystore
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        if: ${{ env.ANDROID_KEYSTORE_BASE64 != '' }}
         shell: bash
         run: |
           mkdir -p android/keystore
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/keystore/upload.keystore
+          echo "${{ env.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/keystore/upload.keystore
 
       - name: Build Android AAB
         shell: bash
         env:
           ANDROID_KEYSTORE_PATH: ../keystore/upload.keystore
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ env.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ env.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ env.ANDROID_KEY_PASSWORD }}
         run: |
           cd android
           ./gradlew bundleRelease --no-daemon
@@ -94,6 +99,15 @@ jobs:
   build-ios:
     runs-on: macos-latest
     needs: verify-web
+    env:
+      IOS_BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+      IOS_BUILD_CERTIFICATE_PASSWORD: ${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}
+      IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
+      IOS_BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 }}
+      IOS_DEVELOPMENT_TEAM: ${{ secrets.IOS_DEVELOPMENT_TEAM }}
+      IOS_PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.IOS_PROVISIONING_PROFILE_SPECIFIER }}
+      IOS_CODE_SIGN_IDENTITY: ${{ secrets.IOS_CODE_SIGN_IDENTITY }}
+      IOS_EXPORT_METHOD: ${{ secrets.IOS_EXPORT_METHOD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -111,30 +125,30 @@ jobs:
         run: npm run sync:ios
 
       - name: Import iOS signing certificate
-        if: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' }}
+        if: ${{ env.IOS_BUILD_CERTIFICATE_BASE64 != '' && env.IOS_BUILD_CERTIFICATE_PASSWORD != '' }}
         shell: bash
         run: |
           CERT_PATH=$RUNNER_TEMP/build_certificate.p12
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          echo -n "${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}" | base64 --decode > "$CERT_PATH"
-          security create-keychain -p "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          echo -n "${{ env.IOS_BUILD_CERTIFICATE_BASE64 }}" | base64 --decode > "$CERT_PATH"
+          security create-keychain -p "${{ env.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
-          security unlock-keychain -p "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
-          security import "$CERT_PATH" -P "${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
-          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          security unlock-keychain -p "${{ env.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
+          security import "$CERT_PATH" -P "${{ env.IOS_BUILD_CERTIFICATE_PASSWORD }}" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ env.IOS_KEYCHAIN_PASSWORD }}" "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH"
 
       - name: Install provisioning profile
-        if: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
+        if: ${{ env.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
         shell: bash
         run: |
           PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          echo -n "${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 }}" | base64 --decode > "$PROFILE_PATH"
+          echo -n "${{ env.IOS_BUILD_PROVISION_PROFILE_BASE64 }}" | base64 --decode > "$PROFILE_PATH"
           cp "$PROFILE_PATH" "$HOME/Library/MobileDevice/Provisioning Profiles"
 
       - name: Build iOS archive (signed)
-        if: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && secrets.IOS_DEVELOPMENT_TEAM != '' && secrets.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && secrets.IOS_CODE_SIGN_IDENTITY != '' }}
+        if: ${{ env.IOS_BUILD_CERTIFICATE_BASE64 != '' && env.IOS_BUILD_CERTIFICATE_PASSWORD != '' && env.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && env.IOS_DEVELOPMENT_TEAM != '' && env.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && env.IOS_CODE_SIGN_IDENTITY != '' }}
         shell: bash
         run: |
           mkdir -p dist/ios
@@ -146,12 +160,12 @@ jobs:
             -archivePath dist/ios/LearnIt3D-Electrical-Foundations.xcarchive \
             archive \
             CODE_SIGN_STYLE=Manual \
-            DEVELOPMENT_TEAM="${{ secrets.IOS_DEVELOPMENT_TEAM }}" \
-            PROVISIONING_PROFILE_SPECIFIER="${{ secrets.IOS_PROVISIONING_PROFILE_SPECIFIER }}" \
-            CODE_SIGN_IDENTITY="${{ secrets.IOS_CODE_SIGN_IDENTITY }}"
+            DEVELOPMENT_TEAM="${{ env.IOS_DEVELOPMENT_TEAM }}" \
+            PROVISIONING_PROFILE_SPECIFIER="${{ env.IOS_PROVISIONING_PROFILE_SPECIFIER }}" \
+            CODE_SIGN_IDENTITY="${{ env.IOS_CODE_SIGN_IDENTITY }}"
 
       - name: Build iOS archive (unsigned compatibility fallback)
-        if: ${{ !(secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_CERTIFICATE_PASSWORD != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && secrets.IOS_DEVELOPMENT_TEAM != '' && secrets.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && secrets.IOS_CODE_SIGN_IDENTITY != '') }}
+        if: ${{ !(env.IOS_BUILD_CERTIFICATE_BASE64 != '' && env.IOS_BUILD_CERTIFICATE_PASSWORD != '' && env.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' && env.IOS_DEVELOPMENT_TEAM != '' && env.IOS_PROVISIONING_PROFILE_SPECIFIER != '' && env.IOS_CODE_SIGN_IDENTITY != '') }}
         shell: bash
         run: |
           mkdir -p dist/ios
@@ -165,7 +179,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
 
       - name: Generate ExportOptions.plist
-        if: ${{ secrets.IOS_EXPORT_METHOD != '' }}
+        if: ${{ env.IOS_EXPORT_METHOD != '' }}
         shell: bash
         run: |
           cat <<'EOF' > dist/ios/ExportOptions.plist
@@ -174,11 +188,11 @@ jobs:
           <plist version="1.0">
             <dict>
               <key>method</key>
-              <string>${{ secrets.IOS_EXPORT_METHOD }}</string>
+              <string>${{ env.IOS_EXPORT_METHOD }}</string>
               <key>signingStyle</key>
               <string>manual</string>
               <key>teamID</key>
-              <string>${{ secrets.IOS_DEVELOPMENT_TEAM }}</string>
+              <string>${{ env.IOS_DEVELOPMENT_TEAM }}</string>
               <key>compileBitcode</key>
               <false/>
             </dict>
@@ -186,7 +200,7 @@ jobs:
           EOF
 
       - name: Export signed IPA
-        if: ${{ secrets.IOS_EXPORT_METHOD != '' && secrets.IOS_BUILD_CERTIFICATE_BASE64 != '' && secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
+        if: ${{ env.IOS_EXPORT_METHOD != '' && env.IOS_BUILD_CERTIFICATE_BASE64 != '' && env.IOS_BUILD_PROVISION_PROFILE_BASE64 != '' }}
         shell: bash
         run: |
           xcodebuild \
