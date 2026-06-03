@@ -1,0 +1,6 @@
+export default class UIOverlay {
+    constructor(canvas) {
+        this.canvas = canvas;
+        // Future hotspot/annotation system goes here
+    }
+}

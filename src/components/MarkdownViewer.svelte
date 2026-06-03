@@ -12,7 +12,7 @@
     });
 </script>
 
-<div class="lesson" bind:this={container}>
+<div class="lesson">
 
     {@html html}
 
@@ -25,4 +25,3 @@
     line-height: 1.6;
 }
 </style>
-I don't understand why you don't know I guess the most basic of things you just sat here and fucking made the fucking thing with me and you don't even know that it's module 01:02 03

@@ -23,7 +23,13 @@ function init() {
   const dl=new THREE.DirectionalLight(0xffffff,0.8); dl.position.set(5,8,5); scene.add(dl);
 
   // Board
-  scene.add(Object.assign(new THREE.Mesh(new THREE.PlaneGeometry(12,5),new THREE.MeshStandardMaterial({color:0x0a2a0a})),{rotation:{x:-Math.PI/2,y:0,z:0},position:{x:0,y:0,z:0}}));
+  const board = new THREE.Mesh(
+    new THREE.PlaneGeometry(12, 5),
+    new THREE.MeshStandardMaterial({ color: 0x0a2a0a })
+  );
+  board.rotation.x = -Math.PI / 2;
+  board.position.set(0, 0, 0);
+  scene.add(board);
 
   // Source
   addBox(0xff8800, -4.5, 0.3, 0, 0.8,0.8,0.5,'source','120VAC');

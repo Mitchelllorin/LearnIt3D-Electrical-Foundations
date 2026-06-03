@@ -4,6 +4,20 @@ let labelLayer, tooltip;
 const ppeTargets = [];
 const anchoredLabels = [];
 
+function createControls(cameraObject, domElement) {
+  if (typeof THREE.OrbitControls === 'function') {
+    const orbit = new THREE.OrbitControls(cameraObject, domElement);
+    orbit.enableDamping = true;
+    orbit.maxPolarAngle = Math.PI * 0.48;
+    return orbit;
+  }
+
+  return {
+    update() {},
+    target: { set() {} }
+  };
+}
+
 function makeAnchorLabel(text, object3D, color = '#00f5ff') {
   const div = document.createElement('div');
   div.textContent = text;
@@ -187,10 +201,8 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls = createControls(camera, renderer.domElement);
   controls.target.set(0, 1.8, 0);
-  controls.enableDamping = true;
-  controls.maxPolarAngle = Math.PI * 0.48;
 
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();

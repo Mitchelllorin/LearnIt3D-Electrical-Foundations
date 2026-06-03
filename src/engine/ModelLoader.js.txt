@@ -1,0 +1,22 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+export default class ModelLoader {
+    constructor() {
+        this.gltfLoader = new GLTFLoader();
+        this.textureLoader = new THREE.TextureLoader();
+    }
+
+    async loadModel(path) {
+        if (!path) {
+            console.error("ModelLoader: No model path provided.");
+            return this._createErrorPlaceholder();
+        }
+
+        try {
+            const gltf = await this._loadGLTF(path);
+            return gltf.scene;
+        } catch (err) {
+            console.error(`ModelLoader: Failed to load model at ${path}`, err);
+            return this._createErrorPlaceholder();
+        }

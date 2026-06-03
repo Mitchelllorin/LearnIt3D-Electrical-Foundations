@@ -3,47 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LearnIt3D — Electrical Foundations 3D Library</title>
+  <title>LearnIt3D - Electrical Foundations 3D Library</title>
   <style>
-    :root{--bg:#0a0f2e;--panel:#121a44;--border:#00f5ff;--accent:#00ff88;--text:#e9f3ff}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(circle at 20% 0%,#13205a 0%,var(--bg) 40%,#050919 100%);color:var(--text)}
-    header{padding:28px 20px 16px;text-align:center;border-bottom:1px solid #123}
-    h1{margin:0;color:var(--border);font-size:2rem}
-    .tag{margin-top:8px;color:var(--accent);letter-spacing:.15em}
-    main{max-width:1200px;margin:0 auto;padding:20px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-    .card{background:rgba(18,26,68,.82);border:1px solid #1d2d66;border-radius:12px;padding:16px;display:flex;flex-direction:column;min-height:180px;transition:.2s box-shadow,.2s border-color}
-    .card:hover{border-color:var(--border);box-shadow:0 0 22px rgba(0,245,255,.35)}
-    .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#091433;border:1px solid var(--border);color:var(--border);font-size:.8rem;margin-bottom:10px}
-    .title{font-size:1.06rem;font-weight:700;margin-bottom:8px}
-    .desc{font-size:.9rem;opacity:.9;line-height:1.4;flex-grow:1}
-    .btn{display:inline-block;margin-top:14px;padding:9px 12px;border-radius:8px;text-decoration:none;background:#0b1f46;border:1px solid var(--border);color:#e8ffff;font-weight:700}
-    .btn:hover{background:#103062}
-    footer{text-align:center;padding:24px;color:#9ac;opacity:.9}
+    :root {
+      --bg-1: #040915;
+      --bg-2: #081933;
+      --bg-3: #0d2a52;
+      --panel: rgba(8, 23, 48, 0.78);
+      --line: rgba(126, 217, 255, 0.48);
+      --line-strong: #6ee7ff;
+      --accent: #76ffbc;
+      --text: #ebf7ff;
+      --text-soft: #bfdcf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 580px at -5% -8%, rgba(57, 170, 255, 0.22), transparent 62%),
+        radial-gradient(900px 520px at 110% -10%, rgba(59, 255, 186, 0.14), transparent 62%),
+        linear-gradient(168deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 30px 20px 18px;
+      text-align: center;
+      border-bottom: 1px solid rgba(93, 172, 230, 0.22);
+      animation: reveal .45s ease-out;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--line-strong);
+      font-size: clamp(1.6rem, 3.8vw, 2.3rem);
+      letter-spacing: 0.02em;
+      text-shadow: 0 8px 24px rgba(26, 184, 255, 0.22);
+    }
+
+    .tag {
+      margin-top: 8px;
+      color: var(--accent);
+      letter-spacing: 0.22em;
+      font-size: .8rem;
+      text-transform: uppercase;
+    }
+
+    main { max-width: 1220px; margin: 0 auto; padding: 24px 20px 28px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: linear-gradient(170deg, rgba(12, 30, 60, 0.86), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 180px;
+      transition: .18s transform, .2s box-shadow, .2s border-color;
+      animation: reveal .5s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      box-shadow: 0 14px 28px rgba(4, 12, 24, 0.4);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(5, 19, 40, 0.8);
+      border: 1px solid var(--line);
+      color: var(--line-strong);
+      font-size: .78rem;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .title { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .desc { font-size: .9rem; color: var(--text-soft); line-height: 1.4; flex-grow: 1; }
+
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      background: linear-gradient(150deg, #112f5d, #0b2143);
+      border: 1px solid var(--line);
+      color: #eaf9ff;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .btn:hover { background: linear-gradient(150deg, #15407e, #10315e); }
+
+    footer {
+      text-align: center;
+      padding: 0 20px 28px;
+      color: #9dbedd;
+      opacity: .95;
+      font-size: .9rem;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>⚡ LearnIt3D — Electrical Foundations</h1>
-    <div class="tag">STEM · SIMULATED · 3D</div>
+    <h1>LearnIt3D - Electrical Foundations</h1>
+    <div class="tag">STEM | Simulated | 3D</div>
   </header>
   <main>
     <section class="grid">
-      <article class="card"><span class="badge">Module 01</span><div class="title">PPE & Hazard Zones</div><div class="desc">Interactive worker safety scene with hazard zone awareness.</div><a class="btn" href="scene01.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 02</span><div class="title">Ohm's Law Slider Tool</div><div class="desc">Adjust V, I, R and observe real-time electrical relationships.</div><a class="btn" href="scene02.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 03</span><div class="title">Series/Parallel Builder</div><div class="desc">Build resistor networks and inspect equivalent resistance/current.</div><a class="btn" href="scene03.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 04</span><div class="title">Power Calculator</div><div class="desc">Toggle loads and calculate watts, amps, kWh, and daily cost.</div><a class="btn" href="scene04.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 05</span><div class="title">Conductivity Tester</div><div class="desc">Compare conductors and insulators under adjustable voltage.</div><a class="btn" href="scene05.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 06</span><div class="title">Multimeter Simulation</div><div class="desc">Select meter mode and test scenarios for realistic readings.</div><a class="btn" href="scene06.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 07</span><div class="title">AC Waveform Visualizer</div><div class="desc">Explore frequency, amplitude, RMS, and period relationships.</div><a class="btn" href="scene07.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 08</span><div class="title">Transformer Animation</div><div class="desc">Adjust turns ratio and watch output voltage and flux behavior.</div><a class="btn" href="scene08.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 09</span><div class="title">3D House Wiring Map</div><div class="desc">Click rooms to inspect breaker size, AWG, and protections.</div><a class="btn" href="scene09.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 10</span><div class="title">Breaker Panel</div><div class="desc">Simulate overload trips and reset breaker states safely.</div><a class="btn" href="scene10.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 11</span><div class="title">Motor Cutaway</div><div class="desc">Inspect stator/rotor components and control motor operation.</div><a class="btn" href="scene11.html">Launch Interactive →</a></article>
-      <article class="card"><span class="badge">Module 12</span><div class="title">Troubleshooting Arena</div><div class="desc">Inject faults, probe nodes, diagnose issues, and score results.</div><a class="btn" href="scene12.html">Launch Interactive →</a></article>
+      <article class="card"><span class="badge">Module 01</span><div class="title">PPE & Hazard Zones</div><div class="desc">Interactive worker safety scene with hazard zone awareness.</div><a class="btn" href="scene01.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 02</span><div class="title">Ohm's Law Slider Tool</div><div class="desc">Adjust V, I, R and observe real-time electrical relationships.</div><a class="btn" href="scene02.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 03</span><div class="title">Series/Parallel Builder</div><div class="desc">Build resistor networks and inspect equivalent resistance/current.</div><a class="btn" href="scene03.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 04</span><div class="title">Power Calculator</div><div class="desc">Toggle loads and calculate watts, amps, kWh, and daily cost.</div><a class="btn" href="scene04.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 05</span><div class="title">Conductivity Tester</div><div class="desc">Compare conductors and insulators under adjustable voltage.</div><a class="btn" href="scene05.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 06</span><div class="title">Multimeter Simulation</div><div class="desc">Select meter mode and test scenarios for realistic readings.</div><a class="btn" href="scene06.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 07</span><div class="title">AC Waveform Visualizer</div><div class="desc">Explore frequency, amplitude, RMS, and period relationships.</div><a class="btn" href="scene07.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 08</span><div class="title">Transformer Animation</div><div class="desc">Adjust turns ratio and watch output voltage and flux behavior.</div><a class="btn" href="scene08.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 09</span><div class="title">3D House Wiring Map</div><div class="desc">Click rooms to inspect breaker size, AWG, and protections.</div><a class="btn" href="scene09.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 10</span><div class="title">Breaker Panel</div><div class="desc">Simulate overload trips and reset breaker states safely.</div><a class="btn" href="scene10.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 11</span><div class="title">Motor Cutaway</div><div class="desc">Inspect stator/rotor components and control motor operation.</div><a class="btn" href="scene11.html">Launch Interactive</a></article>
+      <article class="card"><span class="badge">Module 12</span><div class="title">Troubleshooting Arena</div><div class="desc">Inject faults, probe nodes, diagnose issues, and score results.</div><a class="btn" href="scene12.html">Launch Interactive</a></article>
     </section>
   </main>
-  <footer>© LearnIt3D | Electrical Foundations Apprentice Prep</footer>
+  <footer>Copyright LearnIt3D | Electrical Foundations Apprentice Prep</footer>
 </body>
 </html>

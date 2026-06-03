@@ -5,6 +5,19 @@ const anchors = [];
 const circuit = [];
 let seriesGroup, parallelGroup, wireGroup;
 
+function createControls(cameraObject, domElement) {
+  if (typeof THREE.OrbitControls === 'function') {
+    const orbit = new THREE.OrbitControls(cameraObject, domElement);
+    orbit.enableDamping = true;
+    return orbit;
+  }
+
+  return {
+    update() {},
+    target: { set() {} }
+  };
+}
+
 function makeAnchor(text, object3D, color = '#00f5ff') {
   const div = document.createElement('div');
   div.style.position = 'absolute';
@@ -129,7 +142,7 @@ function init() {
   scene = new THREE.Scene(); scene.background = new THREE.Color('#0a0f2e');
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100); camera.position.set(0, 6, 14);
   renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(window.devicePixelRatio); document.body.appendChild(renderer.domElement);
-  controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = true; controls.target.set(0, 1.5, 0);
+  controls = createControls(camera, renderer.domElement); controls.target.set(0, 1.5, 0);
   scene.add(new THREE.AmbientLight('#a0b8ff', 0.7)); const sun = new THREE.DirectionalLight('#ffffff', 1.15); sun.position.set(6, 9, 5); scene.add(sun);
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(22, 14), new THREE.MeshStandardMaterial({ color: '#0d1537' })); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.01; scene.add(floor); scene.add(new THREE.GridHelper(22, 22, '#123d7a', '#0e234f'));
   seriesGroup = new THREE.Group(); parallelGroup = new THREE.Group(); wireGroup = new THREE.Group(); scene.add(seriesGroup, parallelGroup, wireGroup);

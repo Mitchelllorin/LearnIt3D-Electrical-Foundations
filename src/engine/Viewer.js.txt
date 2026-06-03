@@ -1,0 +1,39 @@
+import Renderer from './Renderer.js';
+import ModelLoader from './ModelLoader.js';
+import CameraController from './CameraController.js';
+import UIOverlay from './UIOverlay.js';
+
+export default class Viewer {
+    constructor(canvas, sceneConfig) {
+        this.canvas = canvas;
+        this.sceneConfig = sceneConfig;
+
+        this.renderer = new Renderer(canvas);
+        this.camera = this.renderer.createCamera();
+        this.controls = new CameraController(this.camera, canvas);
+        this.ui = new UIOverlay(canvas);
+
+        this.loader = new ModelLoader();
+        this.scene = this.renderer.createScene();
+
+        this.loadScene();
+        this.animate = this.animate.bind(this);
+        requestAnimationFrame(this.animate);
+    }
+
+    async loadScene() {
+        const model = await this.loader.loadModel(this.sceneConfig.model);
+        this.scene.add(model);
+
+        if (this.sceneConfig.camera) {
+            const { x, y, z } = this.sceneConfig.camera;
+            this.camera.position.set(x, y, z);
+        }
+    }
+
+    animate() {
+        this.controls.update();
+        this.renderer.render(this.scene, this.camera);
+        requestAnimationFrame(this.animate);
+    }
+}

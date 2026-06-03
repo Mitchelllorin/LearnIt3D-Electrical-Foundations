@@ -1,0 +1,14 @@
+<script>
+    import { onMount } from 'svelte';
+    export let src;
+
+    let canvas;
+
+    onMount(async () => {
+        const config = await fetch(src).then(r => r.json());
+        const { default: Viewer } = await import('../engine/Viewer.js');
+        new Viewer(canvas, config);
+    });
+</script>
+
+<canvas bind:this={canvas} style="width:100%; height:400px;"></canvas>

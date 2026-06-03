@@ -5,6 +5,19 @@ const anchors = [];
 const state = { V: 120, I: 2.4, R: 50, locked: null };
 const ui = {};
 
+function createControls(cameraObject, domElement) {
+  if (typeof THREE.OrbitControls === 'function') {
+    const orbit = new THREE.OrbitControls(cameraObject, domElement);
+    orbit.enableDamping = true;
+    return orbit;
+  }
+
+  return {
+    update() {},
+    target: { set() {} }
+  };
+}
+
 function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
 
 function makeAnchor(text, object3D, color) {
@@ -162,8 +175,7 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
   document.body.appendChild(renderer.domElement);
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
+  controls = createControls(camera, renderer.domElement);
   controls.target.set(0, 0.4, 0);
   scene.add(new THREE.AmbientLight('#90afff', 0.7));
   const dirLight = new THREE.DirectionalLight('#ffffff', 1.1);
